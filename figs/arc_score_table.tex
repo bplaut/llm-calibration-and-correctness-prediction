@@ -1,0 +1,22 @@
+\begin{table*}
+\centering
+\caption{Q\&A with abstention results for ARC-Challenge. See Table~\ref{tab:score} for an explanation of the scoring scheme.}
+\label{tab:arc_score}
+\begin{tabular}{lcccccc}
+\toprule
+& \multicolumn{3}{c}{Balanced Score} & \multicolumn{3}{c}{Conservative Score} \\ 
+LLM & Base LLM & MSP & Max Logit & Base LLM & MSP & Max Logit\\
+\cmidrule(lr){1-1} \cmidrule(lr){2-4} \cmidrule(lr){5-7}
+Falcon 7B & -46.5 & -0.2 & 0.0 & -118.3 & 0.0 & 0.0\\
+Falcon 40B & 16.3 & 19.7 & 18.3 & -24.2 & 2.5 & 1.0\\
+LLaMA 2 7B & -6.4 & 8.0 & 4.8 & -59.6 & 0.8 & -0.2\\
+LLaMA 2 13B & 14.7 & 21.0 & 22.5 & -28.0 & 12.4 & 9.9\\
+LLaMA 2 70B & 49.7 & 52.6 & 51.1 & 24.9 & 40.5 & 32.5\\
+Mistral 7B & 46.3 & 45.2 & 45.4 & 21.2 & 28.6 & 29.2\\
+Mixtral 8x7B & 66.0 & 65.6 & 65.8 & 51.0 & 51.9 & 51.4\\
+SOLAR 10.7B & 62.0 & 62.2 & 62.5 & 44.4 & 44.7 & 48.8\\
+Yi 6B & 34.3 & 37.9 & 35.5 & 2.2 & 24.1 & 16.9\\
+Yi 34B & 66.6 & 67.5 & 66.6 & 50.9 & 55.8 & 53.9\\
+\bottomrule
+\end{tabular}
+\end{table*}

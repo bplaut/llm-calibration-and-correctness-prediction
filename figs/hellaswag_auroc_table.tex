@@ -1,0 +1,44 @@
+\begin{table*}[!h]
+\centering
+\caption{AUROC results for HellaSwag. See Table~\ref{tab:arc_auroc} for more explanation.}
+\label{tab:hellaswag_auroc}
+\begin{tabular}{lccccc}
+\toprule
+& & \multicolumn{2}{c}{MSP} & \multicolumn{2}{c}{Max Logit} \\ 
+LLM & Q\&A Accuracy & AUROC & $p < 10^{-4}$ & AUROC & $p < 10^{-4}$\\ 
+\cmidrule(lr){1-1} \cmidrule(lr){2-2} \cmidrule(lr){3-4} \cmidrule(lr){5-6}
+Falcon 7B & 24.7 & 50.1 & 0/2 & 49.9 & 0/2 \\
+Falcon 40B & 43.4 & 61.5 & 2/2 & 58.8 & 2/2 \\
+LLaMA 2 7B & 40.9 & 58.5 & 2/2 & 54.7 & 1/2 \\
+LLaMA 2 13B & 49.8 & 62.3 & 2/2 & 58.7 & 2/2\\
+LLaMA 2 70B & 64.3 & 70.0 & 2/2 & 64.4 & 2/2\\
+Mistral 7B & 51.8 & 62.8 & 2/2 & 62.3 & 2/2\\
+Mixtral 8x7B & 65.5 & 58.5 & 2/2 & 60.1 & 2/2\\
+SOLAR 10.7B & 78.8 & 63.1 & 2/2 & 67.1 & 2/2\\
+Yi 6B & 39.5 & 68.2 & 2/2 & 62.5 & 2/2\\
+Yi 34B & 75.5 & 73.7 & 2/2 & 67.0 & 2/2\\
+\bottomrule
+\end{tabular}
+\end{table*}
+
+
+% \begin{table*}
+% \centering
+% \begin{tabular}{c|c|c|c|c|c}
+% & & \multicolumn{2}{c|}{MSP} & \multicolumn{2}{c}{Max Logit} \\ 
+% LLM & Q\&A Performance & AUROC & $p < 10^{-5}$ & AUROC & $p < 10^{-5}$\\ \hline
+% Falcon 7B & 24.7 & 50.1 &  & 49.9 & \\
+% Falcon 40B & 43.4 & 61.5 &  & 58.8 & \\
+% LLaMA 2 7B & 40.9 & 58.5 &  & 54.7 & \\
+% LLaMA 2 13B & 49.8 & 62.3 &  & 58.7 & \\
+% LLaMA 2 70B & 64.3 & 70.0 &  & 64.4 & \\
+% Mistral 7B & 51.8 & 62.8 &  & 62.3 & \\
+% Mixtral 8x7B & 65.5 & 58.5 &  & 60.1 & \\
+% SOLAR 10.7B & 78.8 & 63.1 &  & 67.1 & \\
+% Yi 6B & 39.5 & 68.2 &  & 62.5 & \\
+% Yi 34B & 75.5 & 73.7 &  & 67.0 & \\
+% \hline
+% \end{tabular}
+% \caption{AUROC results for HellaSwag. AUROC and Q\&A values are percentages, averaged over the two prompts. Q\&A performance is the percentage of questions the base LLM answered correctly.}
+% \label{tab:hellaswag_auroc}
+% \end{table*}

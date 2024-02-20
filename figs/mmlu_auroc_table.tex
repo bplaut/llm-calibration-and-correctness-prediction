@@ -1,0 +1,43 @@
+\begin{table*}
+\centering
+\caption{AUROC results for MMLU. See Table~\ref{tab:arc_auroc} for more explanation.}
+\label{tab:mmlu_auroc}
+\begin{tabular}{lccccc}
+\toprule
+& & \multicolumn{2}{c}{MSP} & \multicolumn{2}{c}{Max Logit} \\ 
+LLM & Q\&A Accuracy & AUROC & $p < 10^{-4}$ & AUROC & $p < 10^{-4}$\\ 
+\cmidrule(lr){1-1} \cmidrule(lr){2-2} \cmidrule(lr){3-4} \cmidrule(lr){5-6}
+Falcon 7B & 25.7 & 49.1 & 0/2 & 49.4 & 0/2 \\
+Falcon 40B & 44.0 & 61.4 & 2/2 & 52.4 & 1/2 \\
+LLaMA 2 7B & 40.2 & 62.2 & 2/2 & 59.3 & 2/2\\
+LLaMA 2 13B & 47.1 & 63.4 & 2/2 & 62.2 & 2/2\\
+LLaMA 2 70B & 56.3 & 71.3 & 2/2 & 64.8 & 2/2\\
+Mistral 7B & 52.7 & 64.5 & 2/2 & 64.3 & 2/2 \\
+Mixtral 8x7B & 64.4 & 63.9 & 2/2 & 65.6 & 2/2\\
+SOLAR 10.7B & 57.4 & 62.5 & 2/2 & 68.5 & 2/2 \\
+Yi 6B & 50.7 & 68.9 & 2/2 & 63.0 & 2/2\\
+Yi 34B & 64.0 & 66.0 & 2/2 & 66.2 & 2/2\\
+\bottomrule
+\end{tabular}
+\end{table*}
+
+% \begin{table*}
+% \centering
+% \begin{tabular}{c|c|c|c|c|c}
+% & & \multicolumn{2}{c|}{MSP} & \multicolumn{2}{c}{Max Logit} \\ 
+% LLM & Q\&A Accuracy & AUROC & $p < 10^{-5}$ & AUROC & $p < 10^{-5}$\\ \hline
+% Falcon 7B & 25.7 & 49.1 &  & 49.4 & \\
+% Falcon 40B & 44.0 & 61.4 &  & 52.4 & \\
+% LLaMA 2 7B & 40.2 & 62.2 &  & 59.3 & \\
+% LLaMA 2 13B & 47.1 & 63.4 &  & 62.2 & \\
+% LLaMA 2 70B & 56.3 & 71.3 &  & 64.8 & \\
+% Mistral 7B & 52.7 & 64.5 &  & 64.3 & \\
+% Mixtral 8x7B & 64.4 & 63.9 &  & 65.6 & \\
+% SOLAR 10.7B & 57.4 & 62.5 &  & 68.5 & \\
+% Yi 6B & 50.7 & 68.9 &  & 63.0 & \\
+% Yi 34B & 64.0 & 66.0 &  & 66.2 & \\
+% \hline
+% \end{tabular}
+% \caption{AUROC results for MMLU. AUROC and Q\&A values are percentages, averaged over the two prompts. Q\&A Accuracy is the percentage of questions the base LLM answered correctly.}
+% \label{tab:mmlu_auroc}
+% \end{table*}

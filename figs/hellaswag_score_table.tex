@@ -1,0 +1,22 @@
+\begin{table*}
+\centering
+\caption{Q\&A with abstention results for HellaSwag. See Table~\ref{tab:score} for an explanation of the scoring scheme.}
+\label{tab:hellaswag_score}
+\begin{tabular}{lcccccc}
+\toprule
+& \multicolumn{3}{c}{Balanced Score} & \multicolumn{3}{c}{Conservative Score} \\ 
+LLM & Base LLM & MSP & Max Logit & Base LLM & MSP & Max Logit\\ 
+\cmidrule(lr){1-1} \cmidrule(lr){2-4} \cmidrule(lr){5-7}
+Falcon 7B & -50.0 & 0.0 & 0.0 & -125.0 & -0.1 & 0.0\\
+Falcon 40B & -16.9 & 1.9 & 1.3 & -74.9 & -1.0 & -0.3\\
+LLaMA 2 7B & -14.2 & 2.5 & 0.0 & -71.2 & 0.0 & 0.0\\
+LLaMA 2 13B & -6.1 & 9.5 & 8.2 & -59.2 & 3.3 & 0.0\\
+LLaMA 2 70B & 28.1 & 32.8 & 31.2 & -7.9 & 17.9 & 11.1\\
+Mistral 7B & 11.5 & 15.2 & 15.6 & -28.2 & 0.0 & 3.2\\
+Mixtral 8x7B & 36.5 & 37.0 & 36.6 & 8.2 & 15.1 & 14.6\\
+SOLAR 10.7B & 60.8 & 61.3 & 61.3 & 43.1 & 44.3 & 46.1\\
+Yi 6B & -26.2 & 3.8 & 1.3 & -85.9 & 0.4 & 0.0\\
+Yi 34B & 46.4 & 47.1 & 46.4 & 20.9 & 31.7 & 26.2\\
+\bottomrule
+\end{tabular}
+\end{table*}

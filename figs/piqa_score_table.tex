@@ -1,0 +1,20 @@
+\begin{table*}
+\centering
+\begin{tabular}{c|c|c|c|c|c|c}
+& \multicolumn{3}{c|}{Balanced Score} & \multicolumn{3}{c}{Conservative Score} \\ 
+LLM & Base LLM & MSP & Max Logit & Base LLM & MSP & Max Logit\\ \hline
+Falcon 7B & -0.3 & 0.4 & 0.8 & -48.6 & 0.0 & 0.0\\
+Falcon 40B & 34.3 & 34.3 & 34.2 & 6.8 & 8.2 & 6.1\\
+LLaMA 2 7B & 33.3 & 33.3 & 33.3 & 1.2 & 14.6 & 8.5\\
+LLaMA 2 13B & 39.8 & 40.4 & 40.4 & 10.1 & 22.2 & 21.5\\
+LLaMA 2 70B & 60.9 & 61.2 & 61.2 & 42.4 & 47.0 & 43.6\\
+Mistral 7B & 44.7 & 44.7 & 44.7 & 26.1 & 28.5 & 28.2\\
+Mixtral 8x7B & 73.1 & 73.1 & 73.1 & 62.0 & 62.4 & 62.2\\
+SOLAR 10.7B & 70.1 & 70.1 & 70.1 & 60.2 & 60.3 & 60.1\\
+Yi 6B & 20.9 & 20.9 & 20.9 & 18.4 & 18.8 & 18.4\\
+Yi 34B & 69.6 & 69.5 & 69.6 & 58.0 & 59.1 & 59.0\\
+\hline
+\end{tabular}
+\caption{Score results for PIQA. All values are percentages. ``Balanced" and ``conservative" correspond to -1 and -2 points per wrong answer, respectively. Correct answers and abstentions are always worth +1 and 0 points, respectively. The total number of points is divided by the total number of questions to obtain the percentages shown in the table.}
+\label{tab:piqa_score}
+\end{table*}

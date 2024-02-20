@@ -1,0 +1,21 @@
+\renewcommand\arraystretch{1.2}
+\begin{table*}
+\centering
+\begin{tabular}{c|c|c|c|c|c|c}
+& \multicolumn{3}{c|}{Balanced Score} & \multicolumn{3}{c}{Conservative Score} \\ 
+LLM & Base LLM & MSP & Max Logit & Base Score & MSP & Max Logit\\ \hline
+Falcon 7B & -50.2 & 0.0 & 0.0 & -124.4 & 0.0 & 0.0\\
+Falcon 40B & -13.1 & 1.8 & 0.8 & -68.4 & -0.5 & 0.0\\
+LLaMA 2 7B & -21.7 & 0.0 & 0.0 & -82.4 & 0.0 & 0.0\\
+LLaMA 2 13B & -11.1 & 7.5 & 7.2 & -66.5 & 1.8 & 0.2\\
+LLaMA 2 70B & 19.4 & 27.6 & 23.7 & -20.7 & 13.7 & 7.1\\
+Mistral 7B & 17.8 & 22.3 & 21.3 & -20.1 & 2.6 & 7.2\\
+Mixtral 8x7B & 40.6 & 41.3 & 41.5 & 13.6 & 22.4 & 21.8\\
+SOLAR 10.7B & 33.7 & 34.0 & 34.3 & 2.7 & 6.4 & 13.0\\
+Yi 6B & -0.8 & 13.2 & 10.1 & -49.0 & 4.9 & 2.5\\
+Yi 34B & 36.7 & 39.0 & 37.1 & 6.0 & 21.5 & 17.4\\
+\hline
+\end{tabular}
+\caption{Score results excluding WinoGrande. See Figure~\ref{fig:score} for an explanation of the scoring scheme.}
+\label{tab:no_winogrande_score}
+\end{table*}

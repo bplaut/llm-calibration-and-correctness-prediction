@@ -1,0 +1,20 @@
+\begin{table*}
+\centering
+\begin{tabular}{c|c|c|c|c|c}
+& & \multicolumn{2}{c|}{MSP} & \multicolumn{2}{c}{Max Logit} \\ 
+LLM & Q\&A Accuracy & AUROC & $p < 10^{-5}$ & AUROC & $p < 10^{-5}$\\ \hline
+Falcon 7B & 50.3 & 53.3 &  & 51.6 & \\
+Falcon 40B & 69.0 & 63.8 &  & 60.1 & \\
+LLaMA 2 7B & 62.0 & 62.0 &  & 60.0 & \\
+LLaMA 2 13B & 70.8 & 64.1 &  & 62.0 & \\
+LLaMA 2 70B & 78.3 & 77.1 &  & 70.8 & \\
+Mistral 7B & 70.0 & 61.7 &  & 64.5 & \\
+Mixtral 8x7B & 86.8 & 55.8 &  & 58.1 & \\
+SOLAR 10.7B & 86.0 & 57.4 &  & 65.5 & \\
+Yi 6B & 77.3 & 77.2 &  & 73.5 & \\
+Yi 34B & 86.7 & 66.2 &  & 78.4 & \\
+\hline
+\end{tabular}
+\caption{AUROC results for PIQA. AUROC and Q\&A values are percentages, averaged over the two prompts. Q\&A Accuracy is the percentage of questions the base LLM answered correctly.}
+\label{tab:piqa_auroc}
+\end{table*}

@@ -1,0 +1,22 @@
+\begin{table*}
+\centering
+\caption{AUROC results for WinoGrande. See Table~\ref{tab:arc_auroc} for more explanation.}
+\label{tab:winogrande_auroc}
+\begin{tabular}{lccccc}
+\toprule
+& & \multicolumn{2}{c}{MSP} & \multicolumn{2}{c}{Max Logit} \\ 
+LLM & Q\&A Accuracy & AUROC & $p < 10^{-4}$ & AUROC & $p < 10^{-4}$\\ 
+\cmidrule(lr){1-1} \cmidrule(lr){2-2} \cmidrule(lr){3-4} \cmidrule(lr){5-6}
+Falcon 7B & 49.8 & 49.8 & 0/2 & 50.2 & 0/2 \\
+Falcon 40B & 51.5 & 51.2 & 0/2 & 50.4 & 0/2 \\
+LLaMA 2 7B & 50.9 & 51.0 & 0/2 & 51.1 & 0/2 \\
+LLaMA 2 13B & 52.1 & 51.9 & 0/2 & 52.1 & 0/2 \\
+LLaMA 2 70B & 52.2 & 55.9 & 2/2 & 51.5 & 0/2 \\
+Mistral 7B & 54.4 & 54.0 & 2/2 & 54.0 & 2/2 \\
+Mixtral 8x7B & 63.2 & 53.7 & 2/2 & 54.6 & 2/2 \\
+SOLAR 10.7B & 69.2 & 55.1 & 2/2 & 57.4 & 2/2 \\
+Yi 6B & 58.1 & 56.6 & 2/2 & 55.4 & 2/2 \\
+Yi 34B & 67.1 & 59.2 & 2/2 & 60.1 & 2/2 \\
+\bottomrule
+\end{tabular}
+\end{table*}

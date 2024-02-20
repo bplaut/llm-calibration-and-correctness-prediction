@@ -1,0 +1,22 @@
+\begin{table*}[!h]
+\centering
+\caption{AUROC results for ARC-Challenge. AUROC and Q\&A values are percentages, averaged over two data points (the two phrasings). The $p < 10^{-4}$ columns indicate how many data points out of those two resulted in $p< 10^{-4}$ for the null hypothesis that AUROC $= 50\%$.}
+\label{tab:arc_auroc}
+\begin{tabular}{lccccc}
+\toprule
+& & \multicolumn{2}{c}{MSP} & \multicolumn{2}{c}{Max Logit} \\ 
+LLM & Q\&A Accuracy & AUROC & $p < 10^{-4}$ & AUROC & $p < 10^{-4}$\\ 
+\cmidrule(lr){1-1} \cmidrule(lr){2-2} \cmidrule(lr){3-4} \cmidrule(lr){5-6}
+Falcon 7B & 25.3 & 50.4 & 0/2 & 50.9 & 0/2 \\
+Falcon 40B & 55.2 & 64.3 & 2/2 & 57.6 & 1/2 \\
+LLaMA 2 7B & 45.9 & 63.4 & 2/2 & 61.3 & 2/2 \\
+LLaMA 2 13B & 58.1 & 64.9 & 2/2 & 62.8 & 2/2 \\
+LLaMA 2 70B & 74.4 & 77.8 & 2/2 & 69.2 & 2/2 \\
+Mistral 7B & 70.9 & 67.9 & 2/2 & 67.8 & 2/2 \\
+Mixtral 8x7B & 84.3 & 65.4 & 2/2 & 66.7 & 2/2 \\
+SOLAR 10.7B & 80.8 & 61.4 & 2/2 & 70.8 & 2/2 \\
+Yi 6B & 68.1 & 75.3 & 2/2 & 65.1 & 2/2 \\
+Yi 34B & 84.6 & 70.7 & 2/2 & 73.2 & 2/2 \\
+\bottomrule
+\end{tabular}
+\end{table*}
