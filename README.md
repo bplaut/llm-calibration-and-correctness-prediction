@@ -1,5 +1,5 @@
 # Overview
-This repository contains the code for our paper "Softmax Probabilities (Mostly) Predict Large Language Model Correctness on Multiple-Choice Q&A". Please contact plaut@berkeley.edu with any questions or comments. The paper can be found here: https://arxiv.org/pdf/2402.13213.pdf
+This repository contains the code for our paper [Softmax Probabilities (Mostly) Predict Large Language Model Correctness on Multiple-Choice Q&A](https://arxiv.org/pdf/2402.13213.pdf). Please contact plaut@berkeley.edu with any questions or comments.
 
 # Generating text and running Q&A tests
 Before attempting to run this code, make sure you have text generation with Hugging Face set up: https://huggingface.co/docs/transformers/llm_tutorial
