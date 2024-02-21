@@ -1,6 +1,9 @@
-Before attempting to run this code, make sure you have text generation with Hugging Face set up: https://huggingface.co/docs/transformers/llm_tutorial
+# Overview
+This repository contains the code for our paper "Softmax Probabilities (Mostly) Predict Large Language Model Correctness on Multiple-Choice Q&A". Please contact plaut@berkeley.edu with any questions or comments. The paper can be found here: https://arxiv.org/pdf/2402.13213.pdf
 
 # Generating text and running Q&A tests
+Before attempting to run this code, make sure you have text generation with Hugging Face set up: https://huggingface.co/docs/transformers/llm_tutorial
+
 There are two main Python files:
 1. generate_text.py, which uses the Hugging Face interface to generate text with an LLM. This file can be called directly by command-line, but for our experiments it is only called by take_qa_test.py.
 2. take_qa_test.py, which runs a multiple choice Q&A test using a Hugging Face dataset and generate_text.py.
