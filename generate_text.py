@@ -4,7 +4,6 @@ import argparse
 import torch as t
 from utils import str_to_bool
 
-# Still need to try beam search at some point
 class Generator(object):
     def __init__(self, args):
         model_name_map = {'Mistral-raw':'mistralai/Mistral-7B-v0.1',
