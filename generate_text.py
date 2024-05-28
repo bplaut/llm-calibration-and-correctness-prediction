@@ -3,6 +3,7 @@ from transformers import AutoTokenizer
 import argparse
 import torch as t
 from utils import str_to_bool
+from string import ascii_uppercase
 
 class Generator(object):
     def __init__(self, args):
@@ -22,7 +23,7 @@ class Generator(object):
                           'Falcon-7b':'tiiuae/falcon-7b-instruct',
                           'Falcon-40b-raw':'tiiuae/falcon-40b',
                           'Falcon-40b':'tiiuae/falcon-40b-instruct',
-                          'Solar-10.7B-raw':'upstage/SOLAR-10.7B-v1.0',
+                          'Solar-raw':'upstage/SOLAR-10.7B-v1.0',
                           'Solar':'upstage/SOLAR-10.7B-Instruct-v1.0',
                           'Yi-34b':'01-ai/Yi-34B-Chat',
                           'Yi-6b':'01-ai/Yi-6B-Chat',
@@ -41,7 +42,21 @@ class Generator(object):
         self.args = args
 
         self.num_responses = 1 if not self.args['do_sample'] else self.args['num_responses']
-            
+
+    def compute_confidence_levels(self, text_outputs, token_outputs, scores, choices, normalize=True):
+        # Find the max probability for the token which determines the answer      
+        confidence_levels = [None] * len(text_outputs)
+        for (i, response) in enumerate(text_outputs):
+            num_choices = len(choices[i]) if len(choices) > i else 0
+            main_targets = [c + '.' for c in ascii_uppercase][:num_choices]
+            backup_targets = choices[i] + [c for c in ascii_uppercase][:num_choices]
+            token_idx1 = self.token_idx_of_first_target(response, main_targets)
+            token_idx2 = self.token_idx_of_first_target(response, backup_targets)
+            token_idx = token_idx1 if token_idx1 != -1 else token_idx2
+            (conf, _) = self.min_max_logit(scores, i, lo=token_idx, hi=token_idx+1, normalize=normalize)
+            confidence_levels[i] = conf
+        return confidence_levels
+        
     def min_max_logit(self, scores, response_idx, lo=0, hi=None, normalize=True):
         # scores has shape (response_length, num_responses, vocab_size)
         scores = scores[lo:hi,::] 

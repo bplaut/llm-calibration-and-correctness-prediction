@@ -8,7 +8,7 @@ def parse_file_name(file_name, collapse_prompts=False):
     model = parts[1].split('-q')[0]
     group = second_half[second_half.find('_')+1:-4] # remove initial underscore and .txt
     if collapse_prompts:
-        group = group.replace('_first_prompt','').replace('_second_prompt', '')
+        group = group.replace('_first_prompt','').replace('_second_prompt', '').replace('_third_prompt', '')
     return dataset, model, group
 
 def parse_data(file_path, incl_unparseable):
@@ -38,11 +38,14 @@ def expand_model_name(name):
     base_expanded = ('Mistral 7B' if base == 'Mistral' else
                      'Mixtral 8x7B' if base == 'Mixtral' else
                      'SOLAR 10.7B' if base == 'Solar' else
-                     'Llama2 13B' if base == 'Llama-13b' else
-                     'Llama2 7B' if base == 'Llama-7b' else
-                     'Llama2 70B' if base == 'Llama-70b' else
+                     'LLaMA 2 13B' if base == 'Llama-13b' else
+                     'LLaMA 2 7B' if base == 'Llama-7b' else
+                     'LLaMA 2 70B' if base == 'Llama-70b' else
                      'Yi 6B' if base == 'Yi-6b' else
                      'Yi 34B' if base == 'Yi-34b' else
+                     'GPT3.5 Turbo' if base == 'gpt-3.5-turbo' else
+                     'GPT4 Turbo' if base == 'gpt-4-turbo' else
+                     'GPT4' if base == 'gpt-4' else
                      'Falcon 7B' if base == 'Falcon-7b' else
                      'Falcon 40B' if base == 'Falcon-40b' else base)
     return base_expanded + ' Raw' if name.endswith('-raw') else base_expanded
@@ -53,6 +56,8 @@ def expand_label(label):
                 'Score (Conservative)' if label == 'harsh-score' else
                 'Model Size (billions of parameters)' if label == 'size' else
                 'AUROC' if label == 'auc' else
+                'Fraction Correct' if label == 'frac-correct' else
+                'MSP' if label == 'msp' else
                 'Q&A Accuracy' if label == 'acc' else label)
 
 # Each model name is of the form "<model_series> <size>B. Mixtral is a slight exception 
@@ -60,14 +65,23 @@ def model_series(name):
     return expand_model_name(name).split(' ')[0]
 
 def model_size(name):
-    full_name = expand_model_name(name)
-    size_term = full_name.split(' ')[1]
-    end_of_size_term = size_term.rfind('B')
-    return 46.7 if 'Mixtral' in name else float(size_term[:end_of_size_term])
+    if 'Mixtral' in name:
+        return 46.7
+    elif 'gpt' in name.lower():
+        return -1
+    else:
+        full_name = expand_model_name(name)
+        size_term = full_name.split(' ')[-1]
+        end_of_size_term = size_term.rfind('B')
+    return float(size_term[:end_of_size_term])
+
+def sort_models(models):
+    # Sort the rows by model series, then by model size. Also put OpenAI gpt models at the end
+    return sorted(models, key=lambda x: ('gpt' in x, model_series(x), model_size(x)))
 
 def group_label(group):
     logit_type = 'MSP' if group.startswith('no_abst_norm_logits') else 'Max Logit' if group.startswith('no_abst_raw_logits') else group
-    prompt = ', first phrasing' if group.endswith('first_prompt') else ', second phrasing' if group.endswith('second_prompt') else ''
+    prompt = ', first phrasing' if group.endswith('first_prompt') else ', second phrasing' if group.endswith('second_prompt') else ', third phrasing' if group.endswith('third_prompt') else ''
     return logit_type, prompt
 
 def make_pct(x):

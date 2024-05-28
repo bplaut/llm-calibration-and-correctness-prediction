@@ -1,4 +1,5 @@
-import generate_text
+from generate_text import Generator, t_to_str, parse_args
+from openai_generate import OpenAIGenerator
 import os
 from datasets import load_dataset, concatenate_datasets
 import random
@@ -8,7 +9,7 @@ class Test(object):
     def __init__(self, args):
         bounds = args['question_range'].split('-')
         (self.start_q, self.end_q) = (int(bounds[0]), int(bounds[1]))
-        self.model = generate_text.Generator(args)
+        self.model = OpenAIGenerator(args) if 'gpt' in args['model'] else Generator(args)
         self.args = args
 
         dset_name = args['dataset'].lower()
@@ -53,15 +54,19 @@ class Test(object):
         else:
             raise Exception(f"Unknown answer format: {answer}")
 
-    def write_output(self, grades, conf_levels_normed, conf_levels_raw):
+    def get_output_filepath(self, logit_str):
         dataset_str = self.args['dataset'].split("/")[-1]
         abstain_str = "_yes_abst" if self.args['abstain_option'] else "_no_abst"
-        logit_strs = ["_norm_logits", "_raw_logits"]
-        prompt_str = "_first_prompt" if self.args['prompt_phrasing'] == 0 else "_second_prompt" if self.args['prompt_phrasing'] == 1 else "_unknown_prompt"
+        prompt_name = {0: "first", 1: "second", 2: "third"}[self.args['prompt_phrasing']]
+        prompt_str = f"_{prompt_name}_prompt"
         out_dir = "results"
         os.makedirs(out_dir, exist_ok=True)
+        return f"{out_dir}/{dataset_str}_{self.args['model']}-q{self.start_q}to{self.end_q}{abstain_str}{logit_str}{prompt_str}.txt"
+        
+    def write_output(self, grades, conf_levels_normed, conf_levels_raw):
+        logit_strs = ["_norm_logits", "_raw_logits"]
         for (logit_str, conf_levels) in zip(logit_strs, [conf_levels_normed, conf_levels_raw]):
-            output_filepath = f"{out_dir}/{dataset_str}_{self.args['model']}-q{self.start_q}to{self.end_q}{abstain_str}{logit_str}{prompt_str}.txt"
+            output_filepath = self.get_output_filepath(logit_str)
             print('\nWriting results to', output_filepath)
             with open(output_filepath, 'w') as f:
                 f.write("grade confidence_level\n")
@@ -97,22 +102,17 @@ Response:\n
 
 Answer:
 """
+        elif self.args['prompt_phrasing'] == 2:
+            return f"""Below is a multiple-choice question. Choose the letter which best answers the question. Keep your response as brief as possible; just state the letter corresponding to your answer, followed by a period, with no explanation.
+
+Question:
+
+{question_string}
+
+Response:
+"""
         else:
             raise Exception(f"Unknown phrasing option: {self.args['prompt_phrasing']}. Must be 0 or 1.")
-
-    def compute_confidence_levels(self, text_outputs, token_outputs, scores, choices, normalize=True):
-        # Find the max probability for the token which determines the answer
-        confidence_levels = [None] * len(text_outputs)
-        for (i, response) in enumerate(text_outputs):
-            num_choices = len(choices[i]) if len(choices) > i else 0
-            main_targets = [c + '.' for c in ascii_uppercase][:num_choices]
-            backup_targets = choices[i] + [c for c in ascii_uppercase][:num_choices]
-            token_idx1 = self.model.token_idx_of_first_target(response, main_targets)
-            token_idx2 = self.model.token_idx_of_first_target(response, backup_targets)
-            token_idx = token_idx1 if token_idx1 != -1 else token_idx2
-            (conf, _) = self.model.min_max_logit(scores, i, lo=token_idx, hi=token_idx+1, normalize=normalize)
-            confidence_levels[i] = conf
-        return confidence_levels
     
     def determine_llm_answer(self, choices, llm_output):
         # Look for A./B./C. etc. 
@@ -181,8 +181,8 @@ Answer:
         # Batch inference
         print("Running inference...\n")
         (text_outputs, token_outputs, scores) = self.model.generate(prompts)
-        confidence_levels_normed = self.compute_confidence_levels(text_outputs, token_outputs, scores, choices, normalize=True)
-        confidence_levels_raw = self.compute_confidence_levels(text_outputs, token_outputs, scores, choices, normalize=False)
+        confidence_levels_normed = self.model.compute_confidence_levels(text_outputs, token_outputs, scores, choices, normalize=True)
+        confidence_levels_raw = self.model.compute_confidence_levels(text_outputs, token_outputs, scores, choices, normalize=False)
 
         # Grade outputs
         print("Grading answers...\n")
@@ -192,7 +192,7 @@ Answer:
             print(f"LLM output: {llm_output}")
             (answer_output, grade) = self.grade_answer(choices[i], correct_answers[i], llm_output)
             print(f"LLM answer: {answer_output}\n")
-            conf_str = lambda x: 0 if generate_text.t_to_str(x)=='' else generate_text.t_to_str(x)
+            conf_str = lambda x: 0 if t_to_str(x)=='' else t_to_str(x)
             # Sometimes we get "" because of how t_to_str works
             print(f"Confidence level normalized: {conf_str(confidence_levels_normed[i])}\n")
             print(f"Confidence level raw: {conf_str(confidence_levels_raw[i])}\n")
@@ -201,8 +201,15 @@ Answer:
 
 def main():
     random.seed(2549900867) # We'll randomize the order of questions and of answer choices, but we want every run to have the same randomization
-    args = generate_text.parse_args()
+    args = parse_args()
     test = Test(args)
+
+    # Exit if the results file already exists. Can use either normed or raw logits for the check since they're both written at the same time
+    output_filepath = test.get_output_filepath("_norm_logits")
+    if os.path.exists(output_filepath):
+        print(f"Results file {output_filepath} already exists. Exiting.")
+        return
+    
     all_grades, all_conf_levels_normed, all_conf_levels_raw = [], [], []
     for start_q in range(test.start_q, test.end_q, args['batch_size']):
         end_q = min(start_q + args['batch_size'], test.end_q)
@@ -214,6 +221,8 @@ def main():
         all_conf_levels_raw += conf_levels_raw
     if len(all_grades) > 0: # E.g. if the dataset only has 817 qs but you ask to run qs 1000-1500
         test.write_output(all_grades, all_conf_levels_normed, all_conf_levels_raw)
+    else:
+        print("The question range you provided is empty. This could either be because endq < startq or because the dataset is too small.")
 
 if __name__ == '__main__':
     main()

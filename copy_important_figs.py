@@ -36,21 +36,26 @@ def main():
                 '/no_abst_norm_logits/auc_vs_acc-no_abst_norm_logits_second_prompt-no_abst_norm_logits_first_prompt',
                 '/no_abst_raw_logits/auc_vs_acc_all_datasets_Max_Logit',
                 '/no_abst_raw_logits/auc_vs_acc-no_abst_raw_logits_second_prompt-no_abst_raw_logits_first_prompt',
-                '/no_abst_norm_logits/conf_distribution',
-                '/no_abst_raw_logits/conf_distribution',
                  ]
     file_list = [cross_group_dir + suffix for suffix in suffixes] + [input_dir + '/main_figs/' + suffix for suffix in suffixes]
-    file_list += [input_dir + '/main_figs/dataset']
+    file_list += [input_dir + '/main_figs/no_abst_dataset']
+    file_list += [input_dir + '/main_figs/frac-correct_vs_msp_uniform']
+    file_list += [input_dir + '/main_figs/frac-correct_vs_msp_quantile']
+    file_list += [input_dir + '/main_figs/calibration_table_uniform']
+    file_list += [input_dir + '/main_figs/calibration_table_quantile']
+    file_list += [input_dir + '/main_figs/no_abst_dataset_bar']
     datasets = ['arc', 'hellaswag', 'mmlu', 'truthfulqa', 'winogrande', 'piqa', 'no_winogrande']
-    middle_dirs = ['_abst_norm_logits_first_prompt', '_abst_norm_logits_second_prompt', '_abst_raw_logits_first_prompt', '_abst_raw_logits_second_prompt', '_abst_norm_logits', '_abst_raw_logits']
+    middle_dirs = ['_norm_logits_first_prompt', '_norm_logits_second_prompt', '_raw_logits_first_prompt', '_raw_logits_second_prompt', '_norm_logits', '_raw_logits']
     for middle_dir in middle_dirs:
-        file_list += [f'{input_dir}/main_figs/yes{middle_dir}/test/score_vs_conf_all_datasets']
-        file_list += [f'{input_dir}/main_figs/yes{middle_dir}/test/harsh-score_vs_conf_all_datasets']
+        file_list += [f'{input_dir}/main_figs/no_abst{middle_dir}/test/score_vs_conf_all_datasets']
+        file_list += [f'{input_dir}/main_figs/no_abst{middle_dir}/test/harsh-score_vs_conf_all_datasets']
     for overall_cross_group_dir in ['all', 'None']:
         file_list += [cross_group_dir + f'/no_abst_{overall_cross_group_dir}/auroc_table', cross_group_dir + f'/no_abst_{overall_cross_group_dir}/auc_vs_acc-no_abst_raw_logits-no_abst_norm_logits']
-        file_list += [cross_group_dir + f'/yes_abst_{overall_cross_group_dir}/score_table']
+        file_list += [cross_group_dir + f'/no_abst_{overall_cross_group_dir}/score_table']
+        file_list += [cross_group_dir + f'/no_abst_{overall_cross_group_dir}/pct_abstained_table']
         file_list += [f'{input_dir}/{dataset}/cross_group_plots/no_abst_{overall_cross_group_dir}/{dataset}_auroc_table' for dataset in datasets]
-        file_list += [f'{input_dir}/{dataset}/cross_group_plots/yes_abst_{overall_cross_group_dir}/{dataset}_score_table' for dataset in datasets]
+        file_list += [f'{input_dir}/{dataset}/cross_group_plots/no_abst_{overall_cross_group_dir}/{dataset}_score_table' for dataset in datasets]
+        file_list += [f'{input_dir}/{dataset}/cross_group_plots/no_abst_{overall_cross_group_dir}/{dataset}_pct_abstained_table' for dataset in datasets]
     copy_files(output_dir, file_list)
 
 main()

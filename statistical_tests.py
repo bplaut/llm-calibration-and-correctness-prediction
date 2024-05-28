@@ -11,7 +11,7 @@ from collections import defaultdict
 
 
 ALL_DATASETS = ["arc", "hellaswag", "mmlu", "truthfulqa", "winogrande"]
-ALL_MODELS = ["Falcon-7b", "Falcon-40b", "Llama-7b", "Llama-13b", "Llama-70b", "Mistral", "Mixtral", "Solar", "Yi-6b", "Yi-34b"]
+ALL_MODELS = ["Falcon-7b", "Falcon-40b", "gpt-3.5-turbo", "gpt-4-turbo", "Llama-7b", "Llama-13b", "Llama-70b", "Mistral", "Mixtral", "Solar", "Yi-6b", "Yi-34b"]
 ALL_PROMPTS = ["first_prompt", "second_prompt"]
 ALL_VALUES = ["raw_logits", "norm_logits"]
 
@@ -113,7 +113,7 @@ def conduct_mann_whitney_tests(incl_unparseable, input_dir):
                         test_data["reject"].append(verdict)
                     else:
                         print(f"Missing data for {prompt}, {dataset}, {model}, {value}")
-    pd.DataFrame(test_data).to_csv("./results_stat_tests/mann_whitney.csv", index = False)
+    pd.DataFrame(test_data).to_csv("./stat_tests_output/mann_whitney.csv", index = False)
 
 def construct_confidence_intervals(incl_unparseable, input_dir):
     all_data = _collect_model_and_dataset_data(incl_unparseable, input_dir)
@@ -145,7 +145,7 @@ def construct_confidence_intervals(incl_unparseable, input_dir):
                         test_data["ci_ub"].append(upper_bound)
                     else:
                         print(f"Missing data for {prompt}, {dataset}, {model}, {value}")
-    pd.DataFrame(test_data).to_csv("./results_stat_tests/confidence_intervals.csv", index = False)
+    pd.DataFrame(test_data).to_csv("./stat_tests_output/confidence_intervals.csv", index = False)
 
 def conduct_model_summary_tests(incl_unparseable, input_dir):
     all_data = _collect_model_and_dataset_data(incl_unparseable, input_dir)
@@ -162,25 +162,26 @@ def conduct_model_summary_tests(incl_unparseable, input_dir):
                         model_aurocs.append(auroc)
                     else:
                         print(f"Missing data for {prompt}, {dataset}, {model}, {value}")
-                _, is_normal = test_normality(model_aurocs)
-                if is_normal:
-                    p_val, stat, df, verdict = one_sample_t(model_aurocs, 0.5, alternative = "greater")
-                    test_data["p_value"].append(p_val)
-                    test_data["t_stat"].append(stat)
-                    test_data["t_dof"].append(df)
-                    test_data["w_stat"].append(np.nan)
-                    test_data["reject"].append(verdict)
-                else:
-                    p_val, stat, verdict = wilcoxon(model_aurocs, 0.5, alternative = "greater")
-                    test_data["p_value"].append(p_val)
-                    test_data["t_stat"].append(np.nan)
-                    test_data["t_dof"].append(np.nan)
-                    test_data["w_stat"].append(stat)
-                    test_data["reject"].append(verdict)
-                test_data["model"].append(model)
-                test_data["prompt"].append(prompt)
-                test_data["value"].append(value)
-    pd.DataFrame(test_data).to_csv("./results_stat_tests/summary_tests.csv", index = False)
+                if len(model_aurocs) > 0:
+                    _, is_normal = test_normality(model_aurocs)
+                    if is_normal:
+                        p_val, stat, df, verdict = one_sample_t(model_aurocs, 0.5, alternative = "greater")
+                        test_data["p_value"].append(p_val)
+                        test_data["t_stat"].append(stat)
+                        test_data["t_dof"].append(df)
+                        test_data["w_stat"].append(np.nan)
+                        test_data["reject"].append(verdict)
+                    else:
+                        p_val, stat, verdict = wilcoxon(model_aurocs, 0.5, alternative = "greater")
+                        test_data["p_value"].append(p_val)
+                        test_data["t_stat"].append(np.nan)
+                        test_data["t_dof"].append(np.nan)
+                        test_data["w_stat"].append(stat)
+                        test_data["reject"].append(verdict)
+                    test_data["model"].append(model)
+                    test_data["prompt"].append(prompt)
+                    test_data["value"].append(value)
+    pd.DataFrame(test_data).to_csv("./stat_tests_output/summary_tests.csv", index = False)
 
 def collate_paired_t_test_data(all_data):
     test_data = {"prompt": [], "value": [], "dataset": [], "model": [], "num_questions": [], "num_base_correct": [], "num_base_wrong": []}
@@ -258,8 +259,8 @@ if __name__ == "__main__":
     parser.add_argument("--input_dir", '-d', type=str, help="Input directory to read data from", required = True)
     args = parser.parse_args()
 
-    if not os.path.exists("./results_stat_tests"):
-        os.makedirs("./results_stat_tests")
+    if not os.path.exists("./stat_tests_output"):
+        os.makedirs("./stat_tests_output")
     
     if args.option == 0:
         construct_confidence_intervals(args.incl_unparseable, args.input_dir)

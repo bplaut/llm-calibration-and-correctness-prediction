@@ -1,9 +1,6 @@
-# Overview
-This repository contains the code for our paper [Softmax Probabilities (Mostly) Predict Large Language Model Correctness on Multiple-Choice Q&A](https://arxiv.org/pdf/2402.13213.pdf). Please contact plaut@berkeley.edu with any questions or comments.
-
-# Generating text and running Q&A tests
 Before attempting to run this code, make sure you have text generation with Hugging Face set up: https://huggingface.co/docs/transformers/llm_tutorial
 
+# Generating text and running Q&A tests
 There are two main Python files:
 1. generate_text.py, which uses the Hugging Face interface to generate text with an LLM. This file can be called directly by command-line, but for our experiments it is only called by take_qa_test.py.
 2. take_qa_test.py, which runs a multiple choice Q&A test using a Hugging Face dataset and generate_text.py.
@@ -68,15 +65,17 @@ Lastly, results_analysis.ipynb groups the p-values to create the tables in the p
 
 # Batching scripts
 
-Finally, it is tedious to call these python files individually for all the combinations of experiments and plots we want to run. For this reason, we have the following two scripts:
+It is tedious to call these python files individually for all the combinations of experiments and plots we want to run. For this reason, we have the following two scripts:
 1. run_qa_tests.sh, which calls take_qa_test.py (which in turn calls generate_text.py). Usage:
 ```
 ./run_qa_tests.sh <comma-separated model names> <comma-separated dataset names> <comma-separated question ranges> prompt_phrasing abstain_option
 ```
-For example,
+For example, to run all of the experiments for the first prompt phrasing, the command would be
 ```
-./run_qa_tests.sh Mistral,Llama-13b,Llama-70b arc,truthfulqa 0-500,500-1000 0 False
+./run_qa_tests.sh Llama-7b,Llama-13b,Llama-70b,Falcon-7b,Falcon-40b,Mistral,Mixtral,Solar,Yi-6b,Yi-34b,gpt-3.5-turbo,gpt-4-turbo arc,hellaswag,mmlu,truthfulqa,winogrande 0-1000,1000-2000,2000-3000,3000-4000,4000-5000,5000-6000 0 False
 ```
+To run the second prompt, one would replace the final 0 with 1. Note that although we enabled the ability to include an "I don't know" option in the answer choices, the final experiments all have abstain_option=False.
+
 2. do_post_processing.sh, which calls plot_data.py, copy_important_figs.py, and statistal_tests.py. Usage:
 ```
 ./do_post_processing <directory> <collapse_prompts> <incl_unparseable>
@@ -85,7 +84,12 @@ For example,
 ```
 ./do_post_processing results False True
 ```
+The final analysis was run with collapse_prompts=False and incl_unparseable=True. These choices are discussed in the paper.
+
 Currently, results_analysis.ipynb is not called by the scripts and must be run separately.
 
 # Resource requirements
-We used NVIDIA RTX A6000 GPUs for our experiments, which has 48GB RAM. If you are using a GPU with less RAM, you may need to reduce the batch sizes in run_qa_tests.sh. Storing the models on disk also takes a lot of space, with the smallest (Yi 6B) taking up 12 GB, and the largest (Llama 70B) taking up 129 GB. With our setup, it took about 2 weeks to run all of the experiments from start to finish: ten models X five datasets X 6000 questions X two prompt phrasings X {no abstain option, yes abstain option}.
+We used NVIDIA RTX A6000 GPUs for our experiments, which has 48GB RAM. If you are using a GPU with less RAM, you may need to reduce the batch sizes in run_qa_tests.sh. Storing the models on disk also takes a lot of space, with the smallest (Yi 6B) taking up 12 GB, and the largest (Llama 70B) taking up 129 GB. With two A6000 GPUs, it took us about two weeks to run all of the experiments from start to finish: twelve models X five datasets X 6000 questions X two prompt phrasings.
+
+# Output files
+In addition to the code required to run the experiments, we have also included the output files: the "results" directory contains the raw results and the "stat_tests_output" contains the results of the statistical analysis.
