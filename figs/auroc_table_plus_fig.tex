@@ -1,0 +1,39 @@
+\begin{figure}[h]
+\small
+\centering
+\captionof{table}{Main AUROC results. AUROC and Q\&A values are percentages, averaged over ten data points (five datasets and two phrasings). The $p < 10^{-4}$ columns indicate how many of those ten data points yielded $p$ values below $10^{-4}$ for the null hypothesis that AUROC $= 50\%$. The $p$-values are from the Mann-Whitney \emph{U} test; see Section~\ref{sec:auroc} for details.}
+\label{tab:auroc}
+\vspace{-.05 in}
+\begin{tabular}{lccccc}
+\toprule
+& & \multicolumn{2}{c}{MSP} & \multicolumn{2}{c}{Max Logit} \\ 
+LLM & Q\&A Accuracy & AUROC & $p < 10^{-4}$ & AUROC & $p < 10^{-4}$ \\ 
+\cmidrule(lr){1-1} \cmidrule(lr){2-2} \cmidrule(lr){3-4} \cmidrule(lr){5-6} 
+Falcon 7B & 29.1 & 51.8 & 1/10 & 51.7 & 0/10 \\
+Falcon 40B & 44.2 & 59.6 & 7/10 & 55.1 & 4/10 \\
+Llama 2 7B & 40.6 & 57.3 & 6/10 & 55.9 & 5/10 \\
+Llama 2 13B & 46.7 & 60.1 & 6/10 & 58.0 & 6/10 \\
+Llama 2 70B & 58.3 & 69.4 & 10/10 & 63.3 & 8/10 \\
+Llama 3 8B & 58.6 & 71.2 & 10/10 & 68.9 & 10/10 \\
+Llama 3 70B & 78.4 & 81.7 & 10/10 & 72.6 & 10/10 \\
+Mistral 7B & 56.9 & 63.5 & 10/10 & 62.7 & 10/10 \\
+Mixtral 8x7B & 69.0 & 61.6 & 10/10 & 62.4 & 10/10 \\
+SOLAR 10.7B & 67.2 & 59.9 & 9/10 & 65.2 & 10/10 \\
+Yi 6B & 52.1 & 66.8 & 10/10 & 61.7 & 10/10 \\
+Yi 34B & 69.0 & 67.5 & 10/10 & 66.4 & 10/10 \\
+GPT3.5 Turbo & 67.3 & 75.7 & 10/10 & -- & --\\
+GPT4 Turbo & 86.6 & 85.5 & 10/10 & -- & --\\
+\bottomrule
+\end{tabular}
+
+\vspace{.1 in}
+\includegraphics[scale=\figscale]{figs/auc_vs_acc_all_datasets_MSP}
+\includegraphics[scale=\figscale]{figs/auc_vs_acc_all_datasets_Max_Logit}
+ \vspace{-.1 in}
+% \includegraphics[scale=\figscalesmall]{figs/auc_vs_acc-no_abst_norm_logits-no_abst_raw_logits}
+\captionof{figure}{Average AUROC vs average Q\&A accuracy for MSP (left) and Max Logit (right). These plots use the same data as Table~\ref{tab:auroc}. The Pearson correlation coefficients were $r=0.83$ ($p < 10^{-3}$) for MSP and $r=0.91$ ($p < 10^{-4}$) for Max Logit, indicating strong correlations.}
+\label{fig:auroc-qa}
+ % \vspace{-.1 in}
+\end{figure}
+
+

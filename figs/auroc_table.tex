@@ -1,0 +1,26 @@
+\begin{table}[h]
+\centering
+\caption{AUROC results for . See Table~\ref{tab:arc_auroc} for more explanation.}
+\label{tab:auroc}
+\begin{tabular}{lccccc}
+\toprule
+& & \multicolumn{2}{c}{MSP} & \multicolumn{2}{c}{Max Logit} \\ 
+LLM & Q\&A Accuracy & AUROC & $p < 10^{-4}$ & AUROC & $p < 10^{-4}$ \\ 
+\cmidrule(lr){1-1} \cmidrule(lr){2-2} \cmidrule(lr){3-4} \cmidrule(lr){5-6} 
+Falcon 7B & 29.1 & 51.8 & 2/2 & 51.7 & 2/2\\
+Falcon 40B & 44.2 & 59.6 & 2/2 & 55.1 & 2/2\\
+Llama 2 7B & 40.6 & 57.3 & 2/2 & 55.9 & 2/2\\
+Llama 2 13B & 46.7 & 60.1 & 2/2 & 58.0 & 2/2\\
+Llama 2 70B & 58.3 & 69.4 & 2/2 & 63.3 & 2/2\\
+Llama 3 8B & 58.6 & 71.2 & 2/2 & 68.9 & 2/2\\
+Llama 3 70B & 78.4 & 81.7 & 2/2 & 72.6 & 2/2\\
+Mistral 7B & 56.9 & 63.5 & 2/2 & 62.7 & 2/2\\
+Mixtral 8x7B & 69.0 & 61.6 & 2/2 & 62.4 & 2/2\\
+SOLAR 10.7B & 67.2 & 59.9 & 2/2 & 65.2 & 2/2\\
+Yi 6B & 52.1 & 66.8 & 2/2 & 61.7 & 2/2\\
+Yi 34B & 69.0 & 67.5 & 2/2 & 66.4 & 2/2\\
+GPT3.5 Turbo & 67.3 & 75.7 & 2/2 & -- & 2/2\\
+GPT4 Turbo & 86.6 & 85.5 & 2/2 & -- & 2/2\\
+\bottomrule
+\end{tabular}
+\end{table}

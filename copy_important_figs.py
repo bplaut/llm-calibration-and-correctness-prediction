@@ -43,6 +43,8 @@ def main():
     file_list += [input_dir + '/main_figs/frac-correct_vs_msp_quantile']
     file_list += [input_dir + '/main_figs/calibration_table_uniform']
     file_list += [input_dir + '/main_figs/calibration_table_quantile']
+    file_list += [input_dir + '/main_figs/calib_vs_acc_all_datasets']
+    file_list += [input_dir + '/main_figs/calib_vs_size_all_datasets']
     file_list += [input_dir + '/main_figs/no_abst_dataset_bar']
     datasets = ['arc', 'hellaswag', 'mmlu', 'truthfulqa', 'winogrande', 'piqa', 'no_winogrande']
     middle_dirs = ['_norm_logits_first_prompt', '_norm_logits_second_prompt', '_raw_logits_first_prompt', '_raw_logits_second_prompt', '_norm_logits', '_raw_logits']

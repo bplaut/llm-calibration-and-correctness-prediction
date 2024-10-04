@@ -1,0 +1,26 @@
+\begin{table}[h]
+\centering
+\caption{Q\&A with abstention results using 50\% of all questions as training data. See Table~\ref{tab:score} for an explanation of the scoring scheme.}
+\label{tab:score_k=half}
+\begin{tabular}{lcccccc}
+\toprule
+& \multicolumn{3}{c}{Balanced} & \multicolumn{3}{c}{Conservative} \\ 
+LLM & Base & MSP & Max Logit & Base & MSP & Max Logit \\ 
+\cmidrule(lr){1-1}\cmidrule(lr){2-4}\cmidrule(lr){5-7} 
+Falcon 7B & -41.2 & 0.0 & 0.0 & -111.8 & 0.0 & 0.0\\
+Falcon 40B & -11.1 & 1.9 & 0.7 & -66.7 & 0.0 & 0.0\\
+Llama 2 7B & -19.2 & -0.2 & 0.2 & -78.8 & 0.0 & 0.0\\
+Llama 2 13B & -6.8 & 5.1 & 4.7 & -60.3 & 1.0 & 0.1\\
+Llama 2 70B & 16.9 & 23.6 & 19.4 & -24.6 & 7.2 & 4.5\\
+Llama 3 8B & 17.2 & 23.9 & 23.1 & -24.2 & 12.6 & 11.6\\
+Llama 3 70B & 56.2 & 57.7 & 56.4 & 34.2 & 48.4 & 42.2\\
+Mistral 7B & 12.6 & 16.7 & 15.6 & -31.0 & 0.0 & 5.2\\
+Mixtral 8x7B & 37.7 & 38.6 & 38.2 & 6.6 & 15.3 & 15.0\\
+SOLAR 10.7B & 34.7 & 35.4 & 35.0 & 2.0 & 8.9 & 12.7\\
+Yi 6B & 3.1 & 13.7 & 9.9 & -45.3 & 5.3 & 2.1\\
+Yi 34B & 37.2 & 39.6 & 37.7 & 5.8 & 20.7 & 17.2\\
+GPT3.5 Turbo & 34.8 & 38.9 & -- & 2.2 & 27.6 & --\\
+GPT4 Turbo & 73.4 & 74.0 & -- & 60.1 & 66.0 & --\\
+\bottomrule
+\end{tabular}
+\end{table}

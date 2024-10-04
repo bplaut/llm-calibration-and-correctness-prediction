@@ -1,0 +1,28 @@
+\begin{table}[tb]
+\small
+\centering
+\newcommand\offset{~~~~~~}
+\caption{Results on Q\&A with abstention. ``Balanced" and ``conservative" correspond to -1 and -2 points per wrong answer, respectively. Correct answers and abstentions are always worth +1 and 0 points, respectively. The total number of points is divided by the total number of questions (then scaled up by 100 for readability) to obtain the values shown in the table. We highlight the best method for each model.}
+\label{tab:score}
+\begin{tabular}{lrrrrrr}
+\toprule
+& \multicolumn{3}{c}{Balanced} & \multicolumn{3}{c}{Conservative} \\ 
+LLM & Base & MSP & Max Logit & Base & MSP & Max Logit \\ 
+\cmidrule(lr){1-1}\cmidrule(lr){2-4}\cmidrule(lr){5-7}
+Falcon 7B & -41.9 & -1.1 & \textbf{-0.3}\offset & -112.9 & -2.7 & \textbf{-1.0}\offset\\
+Falcon 40B & -11.6 & \textbf{1.9} & 0.5\offset & -67.4 & -0.4 & \textbf{0.0}\offset\\
+Llama 2 7B & -19.0 & -6.4 & \textbf{-5.0}\offset & -78.5 & -6.6 & \textbf{-0.3}\offset\\
+Llama 2 13B & -6.6 & \textbf{4.9} & 4.6\offset & -59.9 & -2.5 & \textbf{-1.5}\offset\\
+Llama 2 70B & 16.6 & \textbf{21.4} & 19.3\offset & -25.1 & \textbf{7.7} & 2.3\offset\\
+Llama 3 8B & 17.1 & \textbf{23.5} & 20.7\offset & -24.3 & \textbf{10.3} & 9.8\offset\\
+Llama 3 70B & \textbf{56.8} & \textbf{56.8} & \textbf{56.8}\offset & 35.2 & \textbf{46.5} & 42.4\offset\\
+Mistral 7B & 13.7 & \textbf{17.0} & 15.6\offset & -29.4 & -1.5 & \textbf{4.8}\offset\\
+Mixtral 8x7B & 38.0 & \textbf{38.4} & \textbf{38.4}\offset & 7.1 & \textbf{15.8} & 12.3\offset\\
+SOLAR 10.7B & 34.4 & \textbf{35.0} & 34.4\offset & 1.5 & 9.4 & \textbf{13.8}\offset\\
+Yi 6B & 4.2 & \textbf{14.5} & 9.5\offset & -43.6 & \textbf{4.9} & -2.4\offset\\
+Yi 34B & 37.8 & \textbf{39.6} & 38.2\offset & 6.8 & \textbf{18.8} & 16.4\offset\\
+GPT3.5 Turbo & 34.5 & \textbf{38.8} & --~~\offset & 1.7 & \textbf{27.0} & --~~\offset\\
+GPT4 Turbo & 73.3 & \textbf{73.6} & --~~\offset & 60.0 & \textbf{65.2} & --~~\offset \\
+\bottomrule
+\end{tabular}
+\end{table}

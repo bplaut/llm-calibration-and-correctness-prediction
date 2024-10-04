@@ -59,12 +59,14 @@ class Test(object):
         abstain_str = "_yes_abst" if self.args['abstain_option'] else "_no_abst"
         prompt_name = {0: "first", 1: "second", 2: "third"}[self.args['prompt_phrasing']]
         prompt_str = f"_{prompt_name}_prompt"
+        few_shot_str = '' if self.args['few_shot_number'] == 0 else f"_few_shot_{self.args['few_shot_number']}"
         out_dir = "results"
         os.makedirs(out_dir, exist_ok=True)
-        return f"{out_dir}/{dataset_str}_{self.args['model']}-q{self.start_q}to{self.end_q}{abstain_str}{logit_str}{prompt_str}.txt"
+        return f"{out_dir}/{dataset_str}_{self.args['model']}-q{self.start_q}to{self.end_q}{abstain_str}{logit_str}{prompt_str}{few_shot_str}.txt"
         
     def write_output(self, grades, conf_levels_normed, conf_levels_raw):
-        logit_strs = ["_norm_logits", "_raw_logits"]
+        logit_strs = ["_norm_logits", "_raw_logits"] if not 'gpt' in self.args['model'] else ["_norm_logits"]
+        # OpenAI models don't have pre-softmax logits
         for (logit_str, conf_levels) in zip(logit_strs, [conf_levels_normed, conf_levels_raw]):
             output_filepath = self.get_output_filepath(logit_str)
             print('\nWriting results to', output_filepath)
@@ -77,18 +79,37 @@ class Test(object):
                              else "Unparseable")
                     f.write(f"{g_str} {c}\n")
 
-    def make_question_string(self, choices, question):
-        if len(choices) > 25:
-            raise Exception("We only have 26 capital letters, so you can't have more than 26 answer options (including 'I don't know'")
-        formatted_choices = [ascii_uppercase[i] + '. ' + ch for (i,ch) in enumerate(choices)]
-        return question + '\n' + '\n'.join(formatted_choices)
+    def make_question(self, i):
+        question_data = self.questions[i]
+        choices_for_q = self.get_choices(question_data)
+        question = self.get_q(question_data)
+        correct_answer_text = choices_for_q[self.get_a(question_data)]
+        random.shuffle(choices_for_q)
+        # Shuffle before adding abstain option; that should always be last
+        if self.args['abstain_option']:
+            choices_for_q = choices_for_q + ["I don't know"]
+        correct_answer = ascii_uppercase[choices_for_q.index(correct_answer_text)]
+        if len(choices_for_q) > 25:
+            raise Exception("We only have 26 capital letters, so you can't have more than 26 answer options (including 'I don't know'. Also why do you need that many?)")
+        formatted_choices = [ascii_uppercase[i] + '. ' + ch for (i,ch) in enumerate(choices_for_q)]
+        question_string = question + '\n' + '\n'.join(formatted_choices)
+        return (question_string, choices_for_q, correct_answer, correct_answer_text)
 
-    def make_prompt(self, question_string):
+    def make_prompt(self, question_string, i):
+        if self.args['few_shot_number'] > 0:
+            # add this number of examples to the prompt
+            valid_example_indices = [j for j in range(len(self.questions)) if j != i]
+            example_indices = random.sample(valid_example_indices, self.args['few_shot_number'])
+            example_questions = [self.make_question(j) for j in example_indices]
+            q_number_str = lambda x: f' {x+1}' if self.args['few_shot_number'] > 1 else ''
+            few_shot_qs = ''.join([f"Example question{q_number_str(j)}:\n{q}\nCorrect response: {a_letter}.\n\n" for (j, (q,_,a_letter,a_text)) in enumerate(example_questions)])
+            prefix = 'First, here are some example questions and the corresponding correct responses.' if self.args['few_shot_number'] > 1 else 'First, here is an example question and the corresponding correct response.'
+            few_shot_string = '\n\n' + prefix + '\n\n' + few_shot_qs + 'Now for the actual question:'
+        else:
+            few_shot_string = '\n\nQuestion:' if self.args['prompt_phrasing'] == 0 else 'Now here is the question:'
         if self.args['prompt_phrasing'] == 0:
-            prompt = f"""Below is a multiple-choice question. Choose the letter which best answers the question. Keep your response as brief as possible; just state the letter corresponding to your answer, followed by a period, with no explanation.
-
-Question:
-
+            prompt = f"""Below is a multiple-choice question. Choose the letter which best answers the question. Keep your response as brief as possible; just state the letter corresponding to your answer, followed by a period, with no explanation. {few_shot_string}
+            
 {question_string}
 
 Response:\n
@@ -96,20 +117,11 @@ Response:\n
             # For some reason the final newline makes Falcon-7b act really weird
             return prompt if self.args['model'] != 'Falcon-7b' else prompt[:-1]
         elif self.args['prompt_phrasing'] == 1:
-            return f"""You will be asked a multiple-choice question. Respond with the letter which corresponds to the correct answer, followed by a period. There is no need to provide an explanation, so your response should be very short. Now here is the question:
+            return f"""You will be asked a multiple-choice question. Respond with the letter which corresponds to the correct answer, followed by a period. There is no need to provide an explanation, so your response should be very short. {few_shot_string}
 
 {question_string}
 
 Answer:
-"""
-        elif self.args['prompt_phrasing'] == 2:
-            return f"""Below is a multiple-choice question. Choose the letter which best answers the question. Keep your response as brief as possible; just state the letter corresponding to your answer, followed by a period, with no explanation.
-
-Question:
-
-{question_string}
-
-Response:
 """
         else:
             raise Exception(f"Unknown phrasing option: {self.args['prompt_phrasing']}. Must be 0 or 1.")
@@ -160,19 +172,8 @@ Response:
         question_strings = [None] * (num_prompts)
         correct_answers = [None] * (num_prompts)
         for i in range(start_q, end_q):
-            question_data = self.questions[i]
-            choices_for_q = self.get_choices(question_data)
-            question = self.get_q(question_data)
-            correct_answer_text = choices_for_q[self.get_a(question_data)]
-            
-            random.shuffle(choices_for_q)
-            # Shuffle before adding abstain option; that should always be last
-            if self.args['abstain_option']:
-                choices_for_q = choices_for_q + ["I don't know"]
-                
-            correct_answer = ascii_uppercase[choices_for_q.index(correct_answer_text)]
-            question_string = self.make_question_string(choices_for_q, question)
-            prompt = self.make_prompt(question_string)
+            (question_string, choices_for_q, correct_answer, correct_answer_text) = self.make_question(i)
+            prompt = self.make_prompt(question_string, i)
             prompts[i - start_q] = prompt
             choices[i - start_q] = choices_for_q
             question_strings[i - start_q] = question_string

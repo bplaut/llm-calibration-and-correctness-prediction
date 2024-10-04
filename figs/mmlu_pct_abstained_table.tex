@@ -1,0 +1,26 @@
+\begin{table*}[h]
+\centering
+\caption{Frequency of abstention on MMLU in the Section~\ref{sec:abstain} experiments.}
+\label{tab:mmlu_pct_abstained}
+\begin{tabular}{lcccccc}
+\toprule
+& \multicolumn{3}{c}{Balanced} & \multicolumn{3}{c}{Conservative} \\ 
+LLM & Base & MSP & Max Logit & Base & MSP & Max Logit \\ 
+\cmidrule(lr){1-1}\cmidrule(lr){2-4}\cmidrule(lr){5-7} 
+Falcon 7B & 0 & 69.2 & 97.1 & 0 & 98.9 & 99.5\\
+Falcon 40B & 0 & 54.0 & 0.0 & 0 & 54.0 & 95.0\\
+Llama 2 7B & 0 & 39.4 & 49.8 & 0 & 39.4 & 97.8\\
+Llama 2 13B & 0 & 12.1 & 63.3 & 0 & 54.6 & 63.3\\
+Llama 2 70B & 0 & 66.6 & 22.9 & 0 & 73.2 & 74.0\\
+Llama 3 8B & 0 & 0.9 & 0.1 & 0 & 55.9 & 50.5\\
+Llama 3 70B & 0 & 9.1 & 0.0 & 0 & 27.2 & 36.5\\
+Mistral 7B & 0 & 27.6 & 30.3 & 0 & 50.0 & 55.7\\
+Mixtral 8x7B & 0 & 3.2 & 2.0 & 0 & 3.2 & 2.0\\
+SOLAR 10.7B & 0 & 12.4 & 31.7 & 0 & 42.3 & 36.1\\
+Yi 6B & 0 & 62.9 & 42.5 & 0 & 68.8 & 67.5\\
+Yi 34B & 0 & 15.8 & 0.0 & 0 & 19.7 & 54.6\\
+GPT3.5 Turbo & 0 & 35.3 & -- & 0 & 35.3 & --\\
+GPT4 Turbo & 0 & 11.5 & -- & 0 & 18.4 & --\\
+\bottomrule
+\end{tabular}
+\end{table*}

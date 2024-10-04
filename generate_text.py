@@ -29,6 +29,8 @@ class Generator(object):
                           'Yi-6b':'01-ai/Yi-6B-Chat',
                           'Yi-34b-raw':'01-ai/Yi-34B',
                           'Yi-6b-raw':'01-ai/Yi-6B',
+                          'Llama3-8b':'meta-llama/Meta-Llama-3-8B-Instruct',
+                          'Llama3-70b':'meta-llama/Meta-Llama-3-70B-Instruct',
         }
         if args['model'] not in model_name_map:
             raise Exception("Unrecognized model name. Check model_name_map")
@@ -76,7 +78,9 @@ class Generator(object):
             # Find the index of the token that contains the character at index i
             tokens = self.tokenizer(s, return_offsets_mapping=True, add_special_tokens=False)
             for token_index, (start, end) in enumerate(tokens.offset_mapping):
-                if start <= i < end:
+                if start <= i < end and 'Llama3' not in self.args['model']:
+                    return token_index
+                elif start <= i and 'Llama3' in self.args['model']: # Llama3 models have a different offset mapping where start and end are always the same. E.g., the offset mapping will be [(0,0), (3,3)] if the first token starts at index 0 and the second at index 3
                     return token_index
         return -1
 
@@ -159,6 +163,7 @@ def parse_args():
     parser.add_argument('-b', '--batch_size', type=int, help='Maximum number of prompts to batch together. Only used for experiments', default=1)
     parser.add_argument('-a', '--abstain_option', type=str_to_bool, help='When running a Q&A test, should we add an option that says "I don\'t know"?', default=False)
     parser.add_argument('-g', '--prompt_phrasing', type=int, help='When running a Q&A test, which of the two prompt phrasings should we use? 0 or 1', default=0)
+    parser.add_argument('-f', '--few_shot_number', type=int, help='When running a Q&A test, how many in-context examples to provide?', default=0)
     return dict(vars(parser.parse_args())) # dictionaries are easier to manipulate sometimes
 
 def t_to_str(T):

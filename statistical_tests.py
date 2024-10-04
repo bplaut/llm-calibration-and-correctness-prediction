@@ -11,7 +11,7 @@ from collections import defaultdict
 
 
 ALL_DATASETS = ["arc", "hellaswag", "mmlu", "truthfulqa", "winogrande"]
-ALL_MODELS = ["Falcon-7b", "Falcon-40b", "gpt-3.5-turbo", "gpt-4-turbo", "Llama-7b", "Llama-13b", "Llama-70b", "Mistral", "Mixtral", "Solar", "Yi-6b", "Yi-34b"]
+ALL_MODELS = ["Falcon-7b", "Falcon-40b", "gpt-3.5-turbo", "gpt-4-turbo", "Llama-7b", "Llama-13b", "Llama-70b", "Llama3-8b", "Llama3-70b", "Mistral", "Mixtral", "Solar", "Yi-6b", "Yi-34b"]
 ALL_PROMPTS = ["first_prompt", "second_prompt"]
 ALL_VALUES = ["raw_logits", "norm_logits"]
 
@@ -77,8 +77,8 @@ def build_confidence_interval(data, alpha = 0.05):
 def _collect_model_and_dataset_data(incl_unparseable, input_dir):
     # index data by data[prompt][value][dataset][model]
     all_data = defaultdict(lambda: defaultdict(lambda: defaultdict(lambda: defaultdict(lambda: ([], [], 0)))))
+    all_results = os.listdir(input_dir)
     for prompt in ALL_PROMPTS:
-        all_results = os.listdir(input_dir)
         for value in ALL_VALUES:
             for dataset in ALL_DATASETS:
                 for model in ALL_MODELS:
@@ -86,12 +86,32 @@ def _collect_model_and_dataset_data(incl_unparseable, input_dir):
                     relevant_files = [filename for filename in all_results if re.match(results_pattern, filename)]
                     for filename in relevant_files:
                         labels, conf_levels, total_qs = parse_data(os.path.join(input_dir, filename), incl_unparseable)
+                        # print("Labels")
+                        # print(labels)
+                        # print("Conf levels")
+                        # print(conf_levels)
+                        # print("total qs")
+                        # print(total_qs)
                         old_labels, old_conf_levels, old_total_qs = all_data[prompt][value][dataset][model]
+                        # print("Old labels")
+                        # print(old_labels)
+                        # print("Old conf levels")
+                        # print(old_conf_levels)
+                        # print("Old total qs")
+                        # print(old_total_qs)
                         all_data[prompt][value][dataset][model] = (np.concatenate([old_labels, labels]), np.concatenate([old_conf_levels, conf_levels]), old_total_qs + total_qs)
     return all_data
 
 def conduct_mann_whitney_tests(incl_unparseable, input_dir):
     all_data = _collect_model_and_dataset_data(incl_unparseable, input_dir)
+    # for prompt in ALL_PROMPTS:
+    #     for value in ALL_VALUES:
+    #         for dataset in ALL_DATASETS:
+    #             for model in ALL_MODELS:
+    #                 try:
+    #                     print(len(all_data[prompt][value][dataset][model][0]))
+    #                 except KeyError:
+    #                     print(prompt, value, dataset, model)
     test_data = {"prompt": [], "value": [], "dataset": [], "model": [], "p_value": [], "u_stat": [], "reject": []}
     for prompt in ALL_PROMPTS:
         for value in ALL_VALUES:
@@ -112,7 +132,8 @@ def conduct_mann_whitney_tests(incl_unparseable, input_dir):
                         test_data["u_stat"].append(stat)
                         test_data["reject"].append(verdict)
                     else:
-                        print(f"Missing data for {prompt}, {dataset}, {model}, {value}")
+                        if "gpt" not in model or value != "raw_logits":
+                            print(f"Missing data for {prompt}, {dataset}, {model}, {value}")
     pd.DataFrame(test_data).to_csv("./stat_tests_output/mann_whitney.csv", index = False)
 
 def construct_confidence_intervals(incl_unparseable, input_dir):
@@ -255,20 +276,20 @@ if __name__ == "__main__":
     # 4: MSP vs Max Logit aurocs battle royale
     ###
     parser.add_argument("--option", "-o", required = True, type = int, help = f"Integer from 0 to 4, determines which test to run")
-    parser.add_argument("--incl_unparseable", "-i", type = str_to_bool, required = True)
     parser.add_argument("--input_dir", '-d', type=str, help="Input directory to read data from", required = True)
     args = parser.parse_args()
+    incl_unparseable = True # We've decided to always include unparseable questions, but leaving this here in case we want to change it in the future for some reason
 
     if not os.path.exists("./stat_tests_output"):
         os.makedirs("./stat_tests_output")
     
     if args.option == 0:
-        construct_confidence_intervals(args.incl_unparseable, args.input_dir)
+        construct_confidence_intervals(incl_unparseable, args.input_dir)
     elif args.option == 1:
-        conduct_mann_whitney_tests(args.incl_unparseable, args.input_dir)
+        conduct_mann_whitney_tests(incl_unparseable, args.input_dir)
     elif args.option == 2:
-        conduct_model_summary_tests(args.incl_unparseable, args.input_dir)
+        conduct_model_summary_tests(incl_unparseable, args.input_dir)
     elif args.option == 3:
-        conduct_paired_t_tests(args.incl_unparseable, args.input_dir)
+        conduct_paired_t_tests(incl_unparseable, args.input_dir)
     elif args.option == 4:
-        conduct_auroc_t_test(args.incl_unparseable, args.input_dir)
+        conduct_auroc_t_test(incl_unparseable, args.input_dir)

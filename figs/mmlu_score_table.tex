@@ -1,0 +1,26 @@
+\begin{table*}[h]
+\centering
+\caption{Q\&A with abstention results for MMLU. See Table~\ref{tab:score} for an explanation of the scoring scheme.}
+\label{tab:mmlu_score}
+\begin{tabular}{lcccccc}
+\toprule
+& \multicolumn{3}{c}{Balanced} & \multicolumn{3}{c}{Conservative} \\ 
+LLM & Base & MSP & Max Logit & Base & MSP & Max Logit \\ 
+\cmidrule(lr){1-1}\cmidrule(lr){2-4}\cmidrule(lr){5-7} 
+Falcon 7B & -48.6 & -15.2 & -1.4 & -122.9 & -1.4 & -0.7\\
+Falcon 40B & -12.0 & 2.1 & -12.0 & -68.0 & -19.8 & -1.7\\
+Llama 2 7B & -19.5 & -4.6 & -3.9 & -79.3 & -37.2 & -0.6\\
+Llama 2 13B & -5.9 & -1.7 & 7.0 & -58.8 & -14.1 & -7.9\\
+Llama 2 70B & 12.5 & 18.9 & 17.3 & -31.2 & 11.3 & 4.7\\
+Llama 3 8B & 12.5 & 12.8 & 12.5 & -31.3 & 16.4 & 9.2\\
+Llama 3 70B & 49.9 & 53.1 & 49.9 & 24.9 & 43.7 & 41.2\\
+Mistral 7B & 5.5 & 12.8 & 12.7 & -41.8 & -5.8 & -2.4\\
+Mixtral 8x7B & 28.8 & 29.7 & 29.5 & -6.8 & -3.8 & -4.8\\
+SOLAR 10.7B & 14.9 & 16.6 & 21.6 & -27.7 & -3.8 & 0.7\\
+Yi 6B & 1.5 & 14.8 & 9.2 & -47.8 & 5.6 & -2.9\\
+Yi 34B & 27.9 & 30.8 & 27.9 & -8.2 & 5.2 & 12.3\\
+GPT3.5 Turbo & 29.3 & 38.2 & -- & -6.0 & 24.9 & --\\
+GPT4 Turbo & 62.8 & 64.5 & -- & 44.1 & 55.4 & --\\
+\bottomrule
+\end{tabular}
+\end{table*}

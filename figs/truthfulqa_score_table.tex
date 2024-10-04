@@ -1,0 +1,26 @@
+\begin{table*}[h]
+\centering
+\caption{Q\&A with abstention results for TruthfulQA. See Table~\ref{tab:score} for an explanation of the scoring scheme.}
+\label{tab:truthfulqa_score}
+\begin{tabular}{lcccccc}
+\toprule
+& \multicolumn{3}{c}{Balanced} & \multicolumn{3}{c}{Conservative} \\ 
+LLM & Base & MSP & Max Logit & Base & MSP & Max Logit \\ 
+\cmidrule(lr){1-1}\cmidrule(lr){2-4}\cmidrule(lr){5-7} 
+Falcon 7B & -60.6 & -3.6 & -1.9 & -140.9 & -10.8 & -5.0\\
+Falcon 40B & -46.3 & -5.6 & 0.0 & -119.5 & -15.7 & -1.7\\
+Llama 2 7B & -50.8 & -34.8 & -47.4 & -126.2 & -62.1 & -0.9\\
+Llama 2 13B & -47.2 & -3.3 & -6.3 & -120.8 & -13.0 & -19.2\\
+Llama 2 70B & -11.3 & 7.2 & 1.1 & -66.9 & -11.5 & -24.5\\
+Llama 3 8B & -19.2 & -4.8 & 1.4 & -78.8 & -1.0 & -9.1\\
+Llama 3 70B & 44.2 & 46.5 & 39.6 & 16.4 & 39.0 & 28.2\\
+Mistral 7B & 8.9 & 11.8 & 16.1 & -36.6 & -5.6 & -13.6\\
+Mixtral 8x7B & 35.3 & 38.2 & 34.9 & 3.0 & 8.0 & 13.9\\
+SOLAR 10.7B & -0.5 & 4.2 & 9.0 & -50.7 & -10.0 & -9.0\\
+Yi 6B & -11.6 & -3.0 & -2.3 & -67.5 & -7.9 & -3.5\\
+Yi 34B & 6.9 & 8.8 & 6.9 & -39.6 & -34.3 & -18.2\\
+GPT3.5 Turbo & 10.9 & 19.6 & -- & -33.6 & 13.3 & --\\
+GPT4 Turbo & 68.9 & 68.9 & -- & 53.3 & 60.3 & --\\
+\bottomrule
+\end{tabular}
+\end{table*}

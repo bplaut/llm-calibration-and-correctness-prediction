@@ -1,0 +1,26 @@
+\begin{table*}[h]
+\centering
+\caption{Frequency of abstention on WinoGrande in the Section~\ref{sec:abstain} experiments.}
+\label{tab:winogrande_pct_abstained}
+\begin{tabular}{lcccccc}
+\toprule
+& \multicolumn{3}{c}{Balanced} & \multicolumn{3}{c}{Conservative} \\ 
+LLM & Base & MSP & Max Logit & Base & MSP & Max Logit \\ 
+\cmidrule(lr){1-1}\cmidrule(lr){2-4}\cmidrule(lr){5-7} 
+Falcon 7B & 0 & 0.0 & 0.0 & 0 & 78.3 & 76.8\\
+Falcon 40B & 0 & 23.3 & 0.0 & 0 & 84.5 & 86.7\\
+Llama 2 7B & 0 & 5.4 & 1.9 & 0 & 94.3 & 92.4\\
+Llama 2 13B & 0 & 75.6 & 59.3 & 0 & 75.6 & 84.0\\
+Llama 2 70B & 0 & 54.0 & 43.5 & 0 & 54.0 & 43.5\\
+Llama 3 8B & 0 & 21.5 & 45.5 & 0 & 67.7 & 93.5\\
+Llama 3 70B & 0 & 27.2 & 9.9 & 0 & 27.2 & 9.9\\
+Mistral 7B & 0 & 17.3 & 92.4 & 0 & 100.0 & 92.4\\
+Mixtral 8x7B & 0 & 0.0 & 0.0 & 0 & 0.0 & 44.4\\
+SOLAR 10.7B & 0 & 10.6 & 0.0 & 0 & 57.5 & 39.0\\
+Yi 6B & 0 & 0.0 & 0.0 & 0 & 85.9 & 99.8\\
+Yi 34B & 0 & 1.9 & 1.1 & 0 & 25.0 & 1.1\\
+GPT3.5 Turbo & 0 & 48.8 & -- & 0 & 59.5 & --\\
+GPT4 Turbo & 0 & 11.5 & -- & 0 & 11.5 & --\\
+\bottomrule
+\end{tabular}
+\end{table*}

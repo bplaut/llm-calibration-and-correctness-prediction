@@ -1,7 +1,10 @@
 import sys
 
 def parse_file_name(file_name, collapse_prompts=False):
-    # filename looks like <dataset>_<model>-q<startq>to<endq>_<group>.txt  
+    # filename usually looks like <dataset>_<model>-q<startq>to<endq>_<group>.txt Could also be <dataset>_<model>-q<startq>to<endq>_<group>_few_shot_<n>.txt
+    if 'few_shot' in file_name:
+        few_shot_idx = file_name.find('_few_shot')
+        file_name = file_name[:few_shot_idx] + '.txt'
     second_half = file_name[file_name.find('to'):]
     parts = file_name.split('_')
     dataset = parts[0]
@@ -38,9 +41,11 @@ def expand_model_name(name):
     base_expanded = ('Mistral 7B' if base == 'Mistral' else
                      'Mixtral 8x7B' if base == 'Mixtral' else
                      'SOLAR 10.7B' if base == 'Solar' else
-                     'LLaMA 2 13B' if base == 'Llama-13b' else
-                     'LLaMA 2 7B' if base == 'Llama-7b' else
-                     'LLaMA 2 70B' if base == 'Llama-70b' else
+                     'Llama 2 13B' if base == 'Llama-13b' else
+                     'Llama 2 7B' if base == 'Llama-7b' else
+                     'Llama 2 70B' if base == 'Llama-70b' else
+                     'Llama 3 8B' if base == 'Llama3-8b' else
+                     'Llama 3 70B' if base == 'Llama3-70b' else
                      'Yi 6B' if base == 'Yi-6b' else
                      'Yi 34B' if base == 'Yi-34b' else
                      'GPT3.5 Turbo' if base == 'gpt-3.5-turbo' else
@@ -48,7 +53,7 @@ def expand_model_name(name):
                      'GPT4' if base == 'gpt-4' else
                      'Falcon 7B' if base == 'Falcon-7b' else
                      'Falcon 40B' if base == 'Falcon-40b' else base)
-    return base_expanded + ' Raw' if name.endswith('-raw') else base_expanded
+    return base_expanded + ' base' if name.endswith('-raw') else base_expanded
 
 def expand_label(label):
         return ('Confidence Threshold' if label == 'conf' else
@@ -58,11 +63,13 @@ def expand_label(label):
                 'AUROC' if label == 'auc' else
                 'Fraction Correct' if label == 'frac-correct' else
                 'MSP' if label == 'msp' else
+                'Calibration Error' if label == 'calib' else
                 'Q&A Accuracy' if label == 'acc' else label)
 
-# Each model name is of the form "<model_series> <size>B. Mixtral is a slight exception 
+# Each model name is of the form "<model_series> <size>B. Model series could have spaces also (e.g., Llama 2). Mixtral is a slight exception, as are base (non-finetuned) models
 def model_series(name):
-    return expand_model_name(name).split(' ')[0]
+    expanded_name = expand_model_name(name)
+    return expanded_name[:expanded_name.rfind(' ')]
 
 def model_size(name):
     if 'Mixtral' in name:
@@ -71,9 +78,10 @@ def model_size(name):
         return -1
     else:
         full_name = expand_model_name(name)
-        size_term = full_name.split(' ')[-1]
-        end_of_size_term = size_term.rfind('B')
-    return float(size_term[:end_of_size_term])
+        end_of_size_term = full_name.rfind('B')
+        main_name = full_name[:end_of_size_term]
+        size_term = main_name.split(' ')[-1]
+        return float(size_term)
 
 def sort_models(models):
     # Sort the rows by model series, then by model size. Also put OpenAI gpt models at the end
@@ -100,7 +108,6 @@ def format_dataset_name(dataset):
     return ('ARC-Challenge' if dataset == 'arc' else
             'HellaSwag' if dataset == 'hellaswag' else
             'MMLU' if dataset == 'mmlu' else
-            'PIQA' if dataset == 'piqa' else
             'TruthfulQA' if dataset == 'truthfulqa' else
             'WinoGrande' if dataset == 'winogrande' else dataset)
 

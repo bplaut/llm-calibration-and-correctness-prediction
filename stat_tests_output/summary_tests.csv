@@ -4,6 +4,8 @@ Falcon-40b,first_prompt,raw_logits,0.09375,,,13.0,False
 Llama-7b,first_prompt,raw_logits,0.0625,,,14.0,False
 Llama-13b,first_prompt,raw_logits,0.03125,,,15.0,True
 Llama-70b,first_prompt,raw_logits,0.03125,,,15.0,True
+Llama3-8b,first_prompt,raw_logits,0.03125,,,15.0,True
+Llama3-70b,first_prompt,raw_logits,0.03125,,,15.0,True
 Mistral,first_prompt,raw_logits,0.03125,,,15.0,True
 Mixtral,first_prompt,raw_logits,0.03125,,,15.0,True
 Solar,first_prompt,raw_logits,0.03125,,,15.0,True
@@ -11,9 +13,13 @@ Yi-6b,first_prompt,raw_logits,0.03125,,,15.0,True
 Yi-34b,first_prompt,raw_logits,0.03125,,,15.0,True
 Falcon-7b,first_prompt,norm_logits,0.21875,,,11.0,False
 Falcon-40b,first_prompt,norm_logits,0.03125,,,15.0,True
+gpt-3.5-turbo,first_prompt,norm_logits,0.03125,,,15.0,True
+gpt-4-turbo,first_prompt,norm_logits,0.03125,,,15.0,True
 Llama-7b,first_prompt,norm_logits,0.03125,,,15.0,True
 Llama-13b,first_prompt,norm_logits,0.03125,,,15.0,True
 Llama-70b,first_prompt,norm_logits,0.03125,,,15.0,True
+Llama3-8b,first_prompt,norm_logits,0.03125,,,15.0,True
+Llama3-70b,first_prompt,norm_logits,0.03125,,,15.0,True
 Mistral,first_prompt,norm_logits,0.03125,,,15.0,True
 Mixtral,first_prompt,norm_logits,0.03125,,,15.0,True
 Solar,first_prompt,norm_logits,0.03125,,,15.0,True
@@ -24,6 +30,8 @@ Falcon-40b,second_prompt,raw_logits,0.0625,,,14.0,False
 Llama-7b,second_prompt,raw_logits,0.03125,,,15.0,True
 Llama-13b,second_prompt,raw_logits,0.03125,,,15.0,True
 Llama-70b,second_prompt,raw_logits,0.03125,,,15.0,True
+Llama3-8b,second_prompt,raw_logits,0.03125,,,15.0,True
+Llama3-70b,second_prompt,raw_logits,0.03125,,,15.0,True
 Mistral,second_prompt,raw_logits,0.03125,,,15.0,True
 Mixtral,second_prompt,raw_logits,0.03125,,,15.0,True
 Solar,second_prompt,raw_logits,0.03125,,,15.0,True
@@ -31,9 +39,13 @@ Yi-6b,second_prompt,raw_logits,0.03125,,,15.0,True
 Yi-34b,second_prompt,raw_logits,0.03125,,,15.0,True
 Falcon-7b,second_prompt,norm_logits,0.21875,,,11.0,False
 Falcon-40b,second_prompt,norm_logits,0.03125,,,15.0,True
+gpt-3.5-turbo,second_prompt,norm_logits,0.03125,,,15.0,True
+gpt-4-turbo,second_prompt,norm_logits,0.03125,,,15.0,True
 Llama-7b,second_prompt,norm_logits,0.03125,,,15.0,True
 Llama-13b,second_prompt,norm_logits,0.03125,,,15.0,True
 Llama-70b,second_prompt,norm_logits,0.03125,,,15.0,True
+Llama3-8b,second_prompt,norm_logits,0.03125,,,15.0,True
+Llama3-70b,second_prompt,norm_logits,0.03125,,,15.0,True
 Mistral,second_prompt,norm_logits,0.03125,,,15.0,True
 Mixtral,second_prompt,norm_logits,0.03125,,,15.0,True
 Solar,second_prompt,norm_logits,0.03125,,,15.0,True

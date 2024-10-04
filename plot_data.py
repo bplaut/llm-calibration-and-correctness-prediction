@@ -10,8 +10,8 @@ import random
 from utils import *
 
 # We want to assign a style to each model globally, even when some models are missing from some groups (i.e., OpenAI models only have MSP, not Max Logit)
-linestyles = ['-', ':', (0, (3, 1, 1, 1, 1, 1)), (0, (0.5,0.5,0.5,0.5,2)),(0, (5, 10)),(0, (5.5, 1)),(0, (3, 5, 1, 5)),(0, (3, 1, 1, 1)), (0, (0.5, 0.5)), (0,(1,1,1,3.5)), (0, (0.5,0.5,0.5,2)), (0,(2,1,2,2))]
-colors = ['pink', '#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd', '#8c564b', '#e377c2', 'teal', '#bcbd22', 'black', '#17becf']
+linestyles = ['-', ':', (0, (3, 1, 1, 1, 1, 1)), (0, (0.5,0.5,0.5,0.5,2)),(0, (5, 10)),(0, (5.5, 1)),(0, (3, 5, 1, 5)),(0, (3, 1, 1, 1)), (0, (0.25,0.25)), (0, (5,0.5,0.5,5)), (0, (0.5, 0.5)), (0,(1,1,1,3.5)), (0, (0.5,0.5,0.5,2)), (0,(2,1,2,2))]
+colors = ['pink', '#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd', '#8c564b', '#e377c2', 'teal', 'slategray', 'indigo', '#bcbd22', 'black', '#17becf']
 style_per_model = dict()
 
 def make_and_sort_legend():
@@ -100,13 +100,15 @@ def scatter_plot(xs, ys, output_dir, model_names, xlabel, ylabel, dataset='all d
         print("slope, r_value, p_value for", xlabel, ylabel, "is", slope, r_value, p_value)
         plt.plot(xs, intercept + slope * xs, color=line_color, linestyle='-')
 
-        plot_name = 'MSP' if group == 'no_abst_norm_logits' else 'Max Logit' if group == 'no_abst_raw_logits' else group
+        plot_name = 'MSP' if group == 'no_abst_norm_logits' else 'Max Logit' if group == 'no_abst_raw_logits' else '' if group == 'main_figs' else group
         plot_name = plot_name if dataset == 'all datasets' else f'{plot_name}, {dataset}'
         file_suffix = f"_{dataset}_{plot_name.replace(' ','_').replace(',','')}"
-        finalize_plot(output_dir, xlabel, ylabel, title_suffix=f': {plot_name} (r = {r_value:.2f})', file_suffix=file_suffix, texts=texts)
+        if file_suffix.endswith('_'):
+            file_suffix = file_suffix[:-1]
+        finalize_plot(output_dir, xlabel, ylabel, title_suffix=f': {plot_name} (r,p = {r_value:.3f},{p_value:.5f})', file_suffix=file_suffix, texts=texts)
     except ValueError as e:
         print("ValueError when running linear regression on", xlabel, ylabel, ":", e)
-        
+
            
 def auc_acc_plots(data, all_aucs, output_dir):
     model_aucs, model_accs = defaultdict(list), defaultdict(list)
@@ -142,7 +144,8 @@ def score_plot(data, output_dir, xlabel, ylabel, dataset, thresholds_to_mark=dic
     # define twelve unique styles
 
     result_thresholds, result_scores, base_scores, pcts_abstained = dict(), dict(), dict(), dict()
-    for (model, xs, ys, pct_abstained_all_threshes) in data:
+    for model in sort_models(data.keys()):
+        (xs, ys, pct_abstained_all_threshes) = data[model]
         if model not in style_per_model:
             style_per_model[model] = (linestyles.pop(0), colors.pop(0))
         (linestyle, color) = style_per_model[model]
@@ -158,15 +161,16 @@ def score_plot(data, output_dir, xlabel, ylabel, dataset, thresholds_to_mark=dic
         # zorder determines which objects are on top
         plt.scatter([thresh_to_mark], [score_to_mark], color='black', marker='o', s=20, zorder=3)
         base_score = ys[0] # We added -1 to the front for base score, see plot_score_vs_thresholds
-        xs, ys = xs[1:], ys[1:] # Remove the -1 for plotting
         plt.plot(xs, ys, label=f"{expand_model_name(model)}", zorder=2, linestyle=linestyle, linewidth=2, color=color)
         result_thresholds[model] = thresh_to_mark
         base_scores[model] = base_score
         result_scores[model] = score_to_mark
         pcts_abstained[model] = pct_abstained
 
-    make_and_sort_legend()
-    plt.legend(handlelength=2.5)
+    if 'norm' in output_dir and ylabel == 'harsh-score':
+        # Only make legend for bottom left plot in paper
+        make_and_sort_legend()
+        plt.legend(handlelength=2.5)
     plot_name = 'MSP' if 'norm' in output_dir else 'Max Logit' if 'raw' in output_dir else 'unknown'
     plot_name = plot_name if dataset == 'all datasets' else f'{plot_name}, {dataset}'
     finalize_plot(output_dir, xlabel, ylabel, title_suffix = f': {plot_name}', file_suffix = f'_{dataset}')
@@ -177,7 +181,7 @@ def plot_score_vs_thresholds(data, output_dir, datasets, wrong_penalty=1, thresh
     max_conf = max([max([max(conf_levels) for _, (_,conf_levels,_) in data[dataset].items()])
                     for dataset in datasets])
     thresholds = np.linspace(0, max_conf, 200) # 200 data points per plot
-    thresholds = np.append([-1], thresholds) # The base score is the score when the threshold is 0, but this could cause float issues if confidence is also exactly zero at times. So add -1
+    thresholds = np.append([-0.0001], thresholds) # The base score is the score when the threshold is 0, but this could cause float issues if confidence is also exactly zero at times. So add another data point
 
     if abs(max_conf - 1) < 0.01: # We're dealing with probabilities: add more points near 1
         thresholds = np.append(thresholds, np.linspace(0.99, 1, 100))
@@ -198,7 +202,7 @@ def plot_score_vs_thresholds(data, output_dir, datasets, wrong_penalty=1, thresh
             all_pcts_abstained[model][dataset] = pcts_abstained
             
     # Now for each model and threshold, average the score and the pct abstained across datasets
-    overall_results = []
+    overall_results = dict()
     for model in all_scores:
         scores_for_model = []
         pcts_abstained_for_model = []
@@ -210,7 +214,7 @@ def plot_score_vs_thresholds(data, output_dir, datasets, wrong_penalty=1, thresh
             avg_pct_abstained = np.mean(pct_abstained_per_dataset)
             scores_for_model.append(avg_score)
             pcts_abstained_for_model.append(avg_pct_abstained)
-        overall_results.append((model, thresholds, scores_for_model, pcts_abstained_for_model))
+        overall_results[model] = (thresholds, scores_for_model, pcts_abstained_for_model)
             
     dataset_name = 'all datasets' if len(datasets) > 1 else datasets[0]
     ylabel = 'score' if wrong_penalty == 1 else 'harsh-score' if wrong_penalty == 2 else f'Wrong penalty of {wrong_penalty}'
@@ -297,27 +301,28 @@ def calibration_curve(labels, conf_levels, n_bins=10, strategy='uniform'):
     bin_pct_correct = bin_correct[bin_total > 0] / bin_total[bin_total > 0]
     bin_avg = bin_conf_sum[bin_total > 0] / bin_total[bin_total > 0]
     return bin_pct_correct, bin_avg, bin_lengths
-    
-def calibration_plots(data, output_dir, strategy='uniform', n_bins=10):
+
+def calibration_plot(data, output_dir, strategy='quantile', n_bins=10):
+    # strategy is either 'quantile' or 'uniform'
     plt.figure()
-    for model in data:
+    for model in sort_models(data.keys()):
         if model not in style_per_model:
             style_per_model[model] = (linestyles.pop(0), colors.pop(0))
         (linestyle, color) = style_per_model[model]
 
         labels, conf_levels, _ = data[model]
         pct_correct, avg_msp, _ = calibration_curve(labels, conf_levels, n_bins=n_bins, strategy=strategy)
-        absolute_error = f'{np.mean(abs(pct_correct - avg_msp)):.2f}'
+        # absolute_error = f'{np.mean(abs(pct_correct - avg_msp)):.2f}'
         if len(pct_correct) < n_bins:
             print("Model", model, f"has {n_bins-len(pct_correct)} empty bins, out of {n_bins} total bins.")
-        plt.plot(avg_msp, pct_correct, label=f'{expand_model_name(model)}: {absolute_error}', linestyle=linestyle, linewidth=2, color=color)
+        plt.plot(avg_msp, pct_correct, label=f'{expand_model_name(model)}', linestyle=linestyle, linewidth=2, color=color)
     # Add black line on the diagonal to represent perfect calibration
-    plt.plot([0, 1], [0, 1], color='black', lw=2, linestyle='-')
+    plt.plot([0, 1], [0, 1], color='black', lw=1, linestyle='-')
     make_and_sort_legend()
     plt.legend()
     finalize_plot(output_dir, 'msp', 'frac-correct', title_suffix=': Calibration', file_suffix=f'_{strategy}')
 
-def make_calibration_table(data, output_dir, strategy='uniform', n_bins=10):
+def make_calibration_table(data, output_dir, strategy='quantile', n_bins=10):
     rows = []
     for model in sort_models(data.keys()):
         labels, conf_levels, _ = data[model]
@@ -330,6 +335,32 @@ def make_calibration_table(data, output_dir, strategy='uniform', n_bins=10):
               '\\cmidrule(lr){1-1} \\cmidrule(lr){2-2} \n')
     caption = 'Calibration Error for each model. See Table~\\ref{tab:calibration} for more explanation.'
     make_table(len(column_names), rows, output_dir, caption=caption, label='tab:calibration', filename=f'calibration_table_{strategy}.tex', header=header, precision=2)
+
+def calibration_acc_plot(data, output_dir, strategy='uniform', n_bins=10):
+    model_data = defaultdict(lambda: [])
+    for group in data:
+        if 'norm' in group:
+            for dataset in data[group]:
+                for model in data[group][dataset]:
+                    labels, conf_levels, _ = data[group][dataset][model]
+                    pct_correct, avg_msp, _ = calibration_curve(labels, conf_levels, n_bins=n_bins, strategy=strategy)
+                    absolute_error = np.mean(abs(pct_correct - avg_msp))
+                    accuracy = make_pct(np.mean(labels))
+                    model_data[model].append((accuracy, absolute_error))
+
+    avg_accs, avg_calib_errors, model_names = [], [], []
+    for model in sort_models(model_data.keys()):
+        (accs, calib_errors) = zip(*model_data[model])
+        avg_acc = np.mean(accs)
+        avg_calib_error = np.mean(calib_errors)
+        avg_accs.append(avg_acc)
+        avg_calib_errors.append(avg_calib_error)
+        model_names.append(model)
+
+    dataset_name = 'all datasets'
+    model_sizes = [model_size(model) for model in model_names]
+    scatter_plot(avg_accs, avg_calib_errors, output_dir, model_names, 'acc', 'calib', dataset_name)
+    scatter_plot(model_sizes, avg_calib_errors, output_dir, model_names, 'size', 'calib', dataset_name)
     
 def make_dataset_plots(all_data, output_dir):
     # one entry per dataset, containing avg acc, avg MSP auc, and avg max logit auc
@@ -361,10 +392,9 @@ def make_dataset_plots(all_data, output_dir):
     column_names = ['Dataset', 'Q\\&A Accuracy', 'MSP AUROC', 'Max Logit AUROC']
     prefix = ('no' if 'no_abst' in list(all_data.keys())[0] else 'yes') + '_abst'
     filename = prefix + '_dataset.tex'
-    header = (' & & MSP & Max Logit \\\\ \n'
-              + ' & '.join(column_names[1:]) + ' \\\\ \n'
+    header = (' & ' + ' & '.join(column_names[1:]) + ' \\\\ \n'
               '\\cmidrule(lr){1-1} \\cmidrule(lr){2-2} \\cmidrule(lr){3-3} \\cmidrule(lr){4-4}\n')
-    make_table(len(column_names), rows, output_dir, caption='Average Q\\&A accuracy and AUROCs per dataset. All values are percentages, averaged over the then models and two prompts.', label='tab:dataset', filename=filename)
+    make_table(len(column_names), rows, output_dir, caption='Average Q\\&A accuracy and AUROCs per dataset. All values are percentages, averaged over the then models and two prompts.', label='tab:dataset', filename=filename, header=header)
 
     # Make bar graph. Three segments on the x-axis: Q&A accuracy, MSP AUROC, Max Logit AUROC. Within each segment, one bar per dataset. So there should be three segments, each with 5 bars
     labels = ['Q&A Accuracy', 'MSP AUROC', 'Max Logit AUROC']
@@ -537,22 +567,23 @@ def cross_group_plots(group_data, output_dir):
     
 def main():
     # Setup
-    if len(sys.argv) < 6:
-        print("Usage: python plot_data.py <output_directory> <incl_unparseable> <collapse_prompts> <dataset1,dataset2,...> <data_file1> [<data_file2> ...]")
+    if len(sys.argv) < 5:
+        print("Usage: python plot_data.py <output_directory> <dataset1,dataset2,...> <collapse_prompts> <data_file1> [<data_file2> ...]")
         sys.exit(1)
     output_dir = sys.argv[1]
-    incl_unparseable = (False if sys.argv[2].lower() == 'false' else True if sys.argv[2].lower() == 'true' else None) # On questions where the model produced an unparseable answer, do we include it and count it as wrong, or discard it?
-    collapse_prompts = (False if sys.argv[3].lower() == 'false' else True if sys.argv[3].lower() == 'true' else None) # Do we collapse the two prompts into a single group with 12k questions per dataset?
-    
-    if incl_unparseable is None:
-        raise Exception('Second argument incl_unparseable must be a boolean (True or False). Instead it was:', sys.argv[2])
-    if collapse_prompts is None:
-        raise Exception('Third argument collapse_prompts must be a boolean (True or False). Instead it was:', sys.argv[3])
-    file_paths = sys.argv[5:]
-    print(f"Reading from {len(file_paths)} files...")
-    datasets_to_analyze = sys.argv[4].split(',')
+    datasets_to_analyze = sys.argv[2].split(',')
     if any([dataset not in ('arc', 'hellaswag', 'mmlu', 'truthfulqa', 'winogrande') for dataset in datasets_to_analyze]):
-        raise Exception(f'Fourth argument must be a comma-separated subset of [arc, hellaswag, mmlu, truthfulqa, winogrande]. Instead it was:', sys.argv[4])
+        raise Exception(f'Second argument must be a comma-separated subset of [arc, hellaswag, mmlu, truthfulqa, winogrande]. Instead it was:', sys.argv[2])
+    if sys.argv[3].lower() == 'true':
+        collapse_prompts = True
+    elif sys.argv[3].lower() == 'false':
+        collapse_prompts = False
+    else:
+        raise Exception(f'Third argument must be True or False. Instead it was:', sys.argv[3])
+    file_paths = sys.argv[4:]
+    print(f"Reading from {len(file_paths)} files...")
+    incl_unparseable = True # We've decided to always include unparseable questions, but leaving this here in case we want to change it in the future for some reason
+
 
     # Data aggregation. We want all_data[group][dataset][model] = (labels, conf_levels, total_qs)
     all_data = defaultdict(lambda: defaultdict(lambda: defaultdict(lambda: ([], [], 0))))
@@ -565,11 +596,9 @@ def main():
             
     # Non-group based plots
     make_dataset_plots(all_data, output_dir)
-    n_bins = 10
-    calibration_plots(collapse_data_to_model(all_data), output_dir, strategy='uniform', n_bins=n_bins)
-    calibration_plots(collapse_data_to_model(all_data), output_dir, strategy='quantile', n_bins=n_bins)
-    make_calibration_table(collapse_data_to_model(all_data), output_dir, strategy='uniform', n_bins=n_bins)
-    make_calibration_table(collapse_data_to_model(all_data), output_dir, strategy='quantile', n_bins=n_bins)
+    calibration_plot(collapse_data_to_model(all_data), output_dir)
+    make_calibration_table(collapse_data_to_model(all_data), output_dir)
+    calibration_acc_plot(all_data, output_dir)
 
     # Single group plots
     group_data = dict()

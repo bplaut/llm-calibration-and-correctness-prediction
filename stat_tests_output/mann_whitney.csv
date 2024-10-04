@@ -4,6 +4,8 @@ first_prompt,raw_logits,arc,Falcon-40b,0.8294115691408949,827784.5,False
 first_prompt,raw_logits,arc,Llama-7b,1.2615928490888366e-14,971981.5,True
 first_prompt,raw_logits,arc,Llama-13b,5.1326940032846225e-25,1011367.5,True
 first_prompt,raw_logits,arc,Llama-70b,1.707805795086955e-46,865208.0,True
+first_prompt,raw_logits,arc,Llama3-8b,5.726846592571184e-101,975006.0,True
+first_prompt,raw_logits,arc,Llama3-70b,1.2665259908732104e-48,379215.0,True
 first_prompt,raw_logits,arc,Mistral,1.7937224202692256e-49,954158.5,True
 first_prompt,raw_logits,arc,Mixtral,1.1542011461697612e-25,580986.0,True
 first_prompt,raw_logits,arc,Solar,3.2020914513575824e-47,742175.0,True
@@ -14,6 +16,8 @@ first_prompt,raw_logits,hellaswag,Falcon-40b,2.3663279245016235e-30,5115577.5,Tr
 first_prompt,raw_logits,hellaswag,Llama-7b,0.20373662934918868,4332697.0,False
 first_prompt,raw_logits,hellaswag,Llama-13b,1.1105896140937977e-16,5054136.0,True
 first_prompt,raw_logits,hellaswag,Llama-70b,6.039104345672065e-77,5299520.0,True
+first_prompt,raw_logits,hellaswag,Llama3-8b,1.2990495301247238e-150,5708685.0,True
+first_prompt,raw_logits,hellaswag,Llama3-70b,1.3810206747773957e-118,4471553.0,True
 first_prompt,raw_logits,hellaswag,Mistral,1.6149598125396204e-69,5678060.5,True
 first_prompt,raw_logits,hellaswag,Mixtral,4.647658927950456e-28,4872520.5,True
 first_prompt,raw_logits,hellaswag,Solar,6.394029630612214e-81,4006871.0,True
@@ -24,6 +28,8 @@ first_prompt,raw_logits,mmlu,Falcon-40b,0.665806181387631,4420942.0,False
 first_prompt,raw_logits,mmlu,Llama-7b,7.030351379366061e-16,4836846.5,True
 first_prompt,raw_logits,mmlu,Llama-13b,1.2435620922312252e-65,5631012.5,True
 first_prompt,raw_logits,mmlu,Llama-70b,2.7909786368492925e-87,5747813.5,True
+first_prompt,raw_logits,mmlu,Llama3-8b,2.2099745281055644e-213,6490894.5,True
+first_prompt,raw_logits,mmlu,Llama3-70b,1.3396369558373275e-236,5244501.0,True
 first_prompt,raw_logits,mmlu,Mistral,1.585117684415618e-93,5866400.5,True
 first_prompt,raw_logits,mmlu,Mixtral,1.4146507366946177e-78,5322457.0,True
 first_prompt,raw_logits,mmlu,Solar,7.04325045602384e-139,6072629.5,True
@@ -34,6 +40,8 @@ first_prompt,raw_logits,truthfulqa,Falcon-40b,0.00028128081298238195,71531.5,Tru
 first_prompt,raw_logits,truthfulqa,Llama-7b,0.0932205424625757,67427.5,False
 first_prompt,raw_logits,truthfulqa,Llama-13b,0.0574598143941877,68073.0,False
 first_prompt,raw_logits,truthfulqa,Llama-70b,8.338262194501816e-19,111352.5,True
+first_prompt,raw_logits,truthfulqa,Llama3-8b,4.0831407563269615e-10,101219.5,True
+first_prompt,raw_logits,truthfulqa,Llama3-70b,1.4060908605202792e-22,96508.0,True
 first_prompt,raw_logits,truthfulqa,Mistral,1.05281731362695e-12,106569.0,True
 first_prompt,raw_logits,truthfulqa,Mixtral,5.53609345321651e-08,91084.5,True
 first_prompt,raw_logits,truthfulqa,Solar,1.947826930373736e-07,100838.5,True
@@ -44,6 +52,8 @@ first_prompt,raw_logits,winogrande,Falcon-40b,0.31610003058286273,4562317.0,Fals
 first_prompt,raw_logits,winogrande,Llama-7b,0.027512116984591786,4647439.0,True
 first_prompt,raw_logits,winogrande,Llama-13b,0.00029172433934395304,4736353.0,True
 first_prompt,raw_logits,winogrande,Llama-70b,0.032554221557431234,4633866.0,True
+first_prompt,raw_logits,winogrande,Llama3-8b,3.145020153923071e-20,5049249.0,True
+first_prompt,raw_logits,winogrande,Llama3-70b,5.101966256616731e-33,4010130.0,True
 first_prompt,raw_logits,winogrande,Mistral,5.2430644938685735e-06,4767321.5,True
 first_prompt,raw_logits,winogrande,Mixtral,1.7341154133886912e-09,4566786.0,True
 first_prompt,raw_logits,winogrande,Solar,1.3689007101354443e-13,4305736.5,True
@@ -56,6 +66,8 @@ first_prompt,norm_logits,arc,gpt-4-turbo,4.2002371793987803e-41,236040.5,True
 first_prompt,norm_logits,arc,Llama-7b,1.6736993491206358e-27,1031607.0,True
 first_prompt,norm_logits,arc,Llama-13b,7.398059302486325e-33,1041590.5,True
 first_prompt,norm_logits,arc,Llama-70b,8.030354400533923e-98,975208.0,True
+first_prompt,norm_logits,arc,Llama3-8b,1.3710988211341076e-130,1023998.5,True
+first_prompt,norm_logits,arc,Llama3-70b,2.339086479069808e-96,419403.0,True
 first_prompt,norm_logits,arc,Mistral,8.017624239420248e-53,963019.5,True
 first_prompt,norm_logits,arc,Mixtral,1.7147733534816752e-26,582846.5,True
 first_prompt,norm_logits,arc,Solar,1.4522381894719592e-16,649243.0,True
@@ -68,6 +80,8 @@ first_prompt,norm_logits,hellaswag,gpt-4-turbo,1.5797308037274724e-233,3193406.5
 first_prompt,norm_logits,hellaswag,Llama-7b,1.1733216529695746e-13,4910348.0,True
 first_prompt,norm_logits,hellaswag,Llama-13b,3.952691657651845e-43,5421426.5,True
 first_prompt,norm_logits,hellaswag,Llama-70b,2.5274516347646828e-145,5754950.5,True
+first_prompt,norm_logits,hellaswag,Llama3-8b,2.981755274960842e-189,5912448.0,True
+first_prompt,norm_logits,hellaswag,Llama3-70b,5.82044250607105e-278,5163112.0,True
 first_prompt,norm_logits,hellaswag,Mistral,1.2643502300401154e-75,5730246.5,True
 first_prompt,norm_logits,hellaswag,Mixtral,2.1132690086923392e-20,4759343.0,True
 first_prompt,norm_logits,hellaswag,Solar,1.293159588369669e-42,3714312.5,True
@@ -80,6 +94,8 @@ first_prompt,norm_logits,mmlu,gpt-4-turbo,9.353862321578929e-305,4741508.0,True
 first_prompt,norm_logits,mmlu,Llama-7b,1.7171581098786588e-41,5192793.5,True
 first_prompt,norm_logits,mmlu,Llama-13b,2.1205431523565512e-76,5723995.5,True
 first_prompt,norm_logits,mmlu,Llama-70b,9.698076318803423e-182,6343171.5,True
+first_prompt,norm_logits,mmlu,Llama3-8b,4.30283978011095e-265,6730686.5,True
+first_prompt,norm_logits,mmlu,Llama3-70b,0.0,5609605.0,True
 first_prompt,norm_logits,mmlu,Mistral,2.802509978282364e-96,5886907.0,True
 first_prompt,norm_logits,mmlu,Mixtral,9.138468571273961e-79,5321232.0,True
 first_prompt,norm_logits,mmlu,Solar,9.679170414745157e-73,5604739.5,True
@@ -92,6 +108,8 @@ first_prompt,norm_logits,truthfulqa,gpt-4-turbo,1.1865110317046218e-40,75274.5,T
 first_prompt,norm_logits,truthfulqa,Llama-7b,0.4182167440145831,64890.0,False
 first_prompt,norm_logits,truthfulqa,Llama-13b,0.0008573781059897662,72259.0,True
 first_prompt,norm_logits,truthfulqa,Llama-70b,7.155398422417331e-28,118324.5,True
+first_prompt,norm_logits,truthfulqa,Llama3-8b,3.891423479700901e-18,109274.0,True
+first_prompt,norm_logits,truthfulqa,Llama3-70b,1.420675770217144e-42,107583.0,True
 first_prompt,norm_logits,truthfulqa,Mistral,8.916363741703711e-19,112358.0,True
 first_prompt,norm_logits,truthfulqa,Mixtral,3.4181396362212874e-11,94786.0,True
 first_prompt,norm_logits,truthfulqa,Solar,0.004236636736006362,92938.5,True
@@ -104,6 +122,8 @@ first_prompt,norm_logits,winogrande,gpt-4-turbo,3.4783092004420645e-169,3865802.
 first_prompt,norm_logits,winogrande,Llama-7b,0.1455184377760228,4597224.5,False
 first_prompt,norm_logits,winogrande,Llama-13b,0.0026115530648819787,4695297.5,True
 first_prompt,norm_logits,winogrande,Llama-70b,3.448813512514103e-17,5055592.5,True
+first_prompt,norm_logits,winogrande,Llama3-8b,3.2506615916853195e-24,5111731.0,True
+first_prompt,norm_logits,winogrande,Llama3-70b,2.185295027448416e-168,4912418.0,True
 first_prompt,norm_logits,winogrande,Mistral,4.045434643246522e-06,4770944.0,True
 first_prompt,norm_logits,winogrande,Mixtral,1.7780605677548465e-07,4512113.0,True
 first_prompt,norm_logits,winogrande,Solar,1.1962648002588885e-08,4200349.0,True
@@ -114,6 +134,8 @@ second_prompt,raw_logits,arc,Falcon-40b,4.8148596226859047e-39,1081724.5,True
 second_prompt,raw_logits,arc,Llama-7b,9.349704820724067e-34,1067292.0,True
 second_prompt,raw_logits,arc,Llama-13b,3.6540817276024096e-33,1041262.0,True
 second_prompt,raw_logits,arc,Llama-70b,3.061759516783073e-52,902624.0,True
+second_prompt,raw_logits,arc,Llama3-8b,5.052985450307335e-114,1022232.0,True
+second_prompt,raw_logits,arc,Llama3-70b,2.7138795582176257e-55,403938.0,True
 second_prompt,raw_logits,arc,Mistral,4.1448577689312834e-43,923103.5,True
 second_prompt,raw_logits,arc,Mixtral,6.661891722991738e-28,602114.5,True
 second_prompt,raw_logits,arc,Solar,4.5025803572347e-47,732197.5,True
@@ -124,6 +146,8 @@ second_prompt,raw_logits,hellaswag,Falcon-40b,1.058350445703407e-32,5262156.5,Tr
 second_prompt,raw_logits,hellaswag,Llama-7b,2.206738746700591e-41,5145473.0,True
 second_prompt,raw_logits,hellaswag,Llama-13b,3.4542997802155276e-51,5508585.0,True
 second_prompt,raw_logits,hellaswag,Llama-70b,4.0361199062833346e-75,5334041.5,True
+second_prompt,raw_logits,hellaswag,Llama3-8b,4.1547527998363614e-159,5788502.5,True
+second_prompt,raw_logits,hellaswag,Llama3-70b,8.450070178471383e-111,4317757.0,True
 second_prompt,raw_logits,hellaswag,Mistral,1.7009930674620834e-53,5523268.0,True
 second_prompt,raw_logits,hellaswag,Mixtral,1.2677279376701712e-49,4887643.5,True
 second_prompt,raw_logits,hellaswag,Solar,2.0069485543263688e-76,4057793.5,True
@@ -134,6 +158,8 @@ second_prompt,raw_logits,mmlu,Falcon-40b,8.402897132268867e-12,4874215.5,True
 second_prompt,raw_logits,mmlu,Llama-7b,2.509306782578712e-60,5428002.5,True
 second_prompt,raw_logits,mmlu,Llama-13b,5.0821668658877483e-54,5520735.5,True
 second_prompt,raw_logits,mmlu,Llama-70b,1.2542317101706753e-84,5726745.5,True
+second_prompt,raw_logits,mmlu,Llama3-8b,1.137342234874407e-253,6706324.5,True
+second_prompt,raw_logits,mmlu,Llama3-70b,1.831446587748195e-246,5365180.5,True
 second_prompt,raw_logits,mmlu,Mistral,1.105377633457963e-71,5678888.0,True
 second_prompt,raw_logits,mmlu,Mixtral,5.569016970934109e-100,5498392.0,True
 second_prompt,raw_logits,mmlu,Solar,2.493859776440953e-126,5978112.5,True
@@ -144,6 +170,8 @@ second_prompt,raw_logits,truthfulqa,Falcon-40b,0.04594619857022882,75895.0,True
 second_prompt,raw_logits,truthfulqa,Llama-7b,0.25406012234296216,65646.0,False
 second_prompt,raw_logits,truthfulqa,Llama-13b,0.05044424979109571,72876.0,False
 second_prompt,raw_logits,truthfulqa,Llama-70b,2.6552476224653964e-14,108507.0,True
+second_prompt,raw_logits,truthfulqa,Llama3-8b,8.151339593752621e-13,104049.0,True
+second_prompt,raw_logits,truthfulqa,Llama3-70b,1.735861791922756e-18,93906.0,True
 second_prompt,raw_logits,truthfulqa,Mistral,1.0561699448443028e-14,108827.0,True
 second_prompt,raw_logits,truthfulqa,Mixtral,9.368273226865144e-17,98528.0,True
 second_prompt,raw_logits,truthfulqa,Solar,2.8570167038892037e-12,106873.5,True
@@ -154,6 +182,8 @@ second_prompt,raw_logits,winogrande,Falcon-40b,0.9657383982347291,4494077.0,Fals
 second_prompt,raw_logits,winogrande,Llama-7b,0.42326952171035503,4550660.0,False
 second_prompt,raw_logits,winogrande,Llama-13b,0.04461910134159148,4624493.5,True
 second_prompt,raw_logits,winogrande,Llama-70b,0.04643833722065704,4625667.5,True
+second_prompt,raw_logits,winogrande,Llama3-8b,7.565846867216286e-16,4980201.0,True
+second_prompt,raw_logits,winogrande,Llama3-70b,2.2133949078882874e-41,4231990.0,True
 second_prompt,raw_logits,winogrande,Mistral,9.56545236324696e-10,4877402.0,True
 second_prompt,raw_logits,winogrande,Mixtral,4.648377920091995e-09,4577808.0,True
 second_prompt,raw_logits,winogrande,Solar,1.6587085181236754e-27,4505819.0,True
@@ -166,6 +196,8 @@ second_prompt,norm_logits,arc,gpt-4-turbo,7.904623078898877e-49,255674.0,True
 second_prompt,norm_logits,arc,Llama-7b,2.0403464249804825e-36,1076661.5,True
 second_prompt,norm_logits,arc,Llama-13b,6.435526208672092e-44,1076952.5,True
 second_prompt,norm_logits,arc,Llama-70b,6.442611108883917e-105,1012104.5,True
+second_prompt,norm_logits,arc,Llama3-8b,1.1104577526115659e-131,1050967.0,True
+second_prompt,norm_logits,arc,Llama3-70b,4.1583338417534195e-96,434467.5,True
 second_prompt,norm_logits,arc,Mistral,4.990454418846806e-41,917067.5,True
 second_prompt,norm_logits,arc,Mixtral,8.111295156397329e-20,576423.0,True
 second_prompt,norm_logits,arc,Solar,3.233203303596336e-14,630289.0,True
@@ -178,6 +210,8 @@ second_prompt,norm_logits,hellaswag,gpt-4-turbo,1.3167246481254415e-254,3496440.
 second_prompt,norm_logits,hellaswag,Llama-7b,5.961750014003108e-51,5246021.0,True
 second_prompt,norm_logits,hellaswag,Llama-13b,7.088734600021696e-83,5792722.0,True
 second_prompt,norm_logits,hellaswag,Llama-70b,4.655616237098469e-145,5804946.5,True
+second_prompt,norm_logits,hellaswag,Llama3-8b,6.019476605247586e-202,6008403.0,True
+second_prompt,norm_logits,hellaswag,Llama3-70b,1.0431201342987054e-274,5031503.0,True
 second_prompt,norm_logits,hellaswag,Mistral,8.210469741860917e-58,5565494.0,True
 second_prompt,norm_logits,hellaswag,Mixtral,1.3272410136535444e-35,4738935.5,True
 second_prompt,norm_logits,hellaswag,Solar,2.066135663271264e-50,3860988.5,True
@@ -190,6 +224,8 @@ second_prompt,norm_logits,mmlu,gpt-4-turbo,1.2335573534312342e-287,4552124.0,Tru
 second_prompt,norm_logits,mmlu,Llama-7b,8.116487541585951e-77,5570893.0,True
 second_prompt,norm_logits,mmlu,Llama-13b,4.886757204841917e-67,5642783.0,True
 second_prompt,norm_logits,mmlu,Llama-70b,2.987362384609191e-172,6291507.5,True
+second_prompt,norm_logits,mmlu,Llama3-8b,6.159213596579014e-266,6760963.5,True
+second_prompt,norm_logits,mmlu,Llama3-70b,0.0,5664736.0,True
 second_prompt,norm_logits,mmlu,Mistral,2.890564209536026e-72,5683878.0,True
 second_prompt,norm_logits,mmlu,Mixtral,2.8292038512967376e-65,5230037.0,True
 second_prompt,norm_logits,mmlu,Solar,2.4924377412344146e-51,5392330.5,True
@@ -202,6 +238,8 @@ second_prompt,norm_logits,truthfulqa,gpt-4-turbo,6.535758381408273e-41,78067.5,T
 second_prompt,norm_logits,truthfulqa,Llama-7b,0.8049005144973354,63041.5,False
 second_prompt,norm_logits,truthfulqa,Llama-13b,0.00036989527055720665,77724.0,True
 second_prompt,norm_logits,truthfulqa,Llama-70b,6.1820277918323045e-27,119037.0,True
+second_prompt,norm_logits,truthfulqa,Llama3-8b,6.944586273379534e-18,108872.5,True
+second_prompt,norm_logits,truthfulqa,Llama3-70b,3.389896994798451e-40,106707.5,True
 second_prompt,norm_logits,truthfulqa,Mistral,3.615257418214953e-19,112913.0,True
 second_prompt,norm_logits,truthfulqa,Mixtral,4.4921824067014916e-18,99399.5,True
 second_prompt,norm_logits,truthfulqa,Solar,2.4040154069509537e-06,99227.5,True
@@ -214,6 +252,8 @@ second_prompt,norm_logits,winogrande,gpt-4-turbo,2.007111578270808e-161,3758535.
 second_prompt,norm_logits,winogrande,Llama-7b,0.1754318358500384,4587828.5,False
 second_prompt,norm_logits,winogrande,Llama-13b,0.045744679975026535,4623792.0,True
 second_prompt,norm_logits,winogrande,Llama-70b,3.717171771680106e-13,4979188.5,True
+second_prompt,norm_logits,winogrande,Llama3-8b,3.035213466040124e-16,4987622.5,True
+second_prompt,norm_logits,winogrande,Llama3-70b,9.837803530419316e-174,5088823.0,True
 second_prompt,norm_logits,winogrande,Mistral,2.4179119703792924e-09,4867402.0,True
 second_prompt,norm_logits,winogrande,Mixtral,1.0469390959115653e-05,4481873.0,True
 second_prompt,norm_logits,winogrande,Solar,2.4096365437604747e-12,4266925.5,True
