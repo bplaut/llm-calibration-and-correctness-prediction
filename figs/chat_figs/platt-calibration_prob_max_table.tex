@@ -1,0 +1,26 @@
+\begin{table*}[h]
+\caption{Calibration error after Platt scaling and Q\&A accuracy for each chat model.}
+\label{tab:calibration_platt}
+\centering
+\begin{tabular}{lcc}
+\toprule
+LLM & Q\&A accuracy & Calibration error (x100) \\ 
+\cmidrule(lr){1-1} \cmidrule(lr){2-2} \cmidrule(lr){3-3}
+Falcon 7B & 30.1 & 6.5\\
+Falcon 40B & 40.5 & 10.5\\
+Llama 2 7B & 39.7 & 13.6\\
+Llama 2 70B & 58.7 & 13.9\\
+Llama 3.0 8B & 59.1 & 12.3\\
+Llama 3.0 70B & 78.8 & 13.2\\
+Llama 3.1 8B & 62.0 & 9.1\\
+Llama 3.1 70B & 80.6 & 11.1\\
+Mistral 7B & 57.0 & 12.3\\
+Mixtral 8x7B & 69.9 & 13.8\\
+SOLAR 10.7B & 67.5 & 15.0\\
+Yi 6B & 49.6 & 12.2\\
+Yi 34B & 69.1 & 11.3\\
+GPT-3.5 Turbo & 67.5 & 13.3\\
+GPT-4o & 86.9 & 11.2\\
+\bottomrule
+\end{tabular}
+\end{table*}

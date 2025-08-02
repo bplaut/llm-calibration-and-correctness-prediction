@@ -1,0 +1,26 @@
+\begin{table*}[h]
+\caption{Thresholds for each model on each dataset (balanced scoring, M). }
+\label{tab:thresholds_prob_entropy_k20_w1}
+\centering
+\begin{tabular}{l S[table-format=3.1] S[table-format=3.1] S[table-format=3.1] S[table-format=3.1] S[table-format=3.1]}
+\toprule
+LLM & ARC-Challenge & HellaSwag & MMLU & TruthfulQA & WinoGrande \\ 
+\cmidrule(lr){1-1} \cmidrule(lr){2-2} \cmidrule(lr){3-3} \cmidrule(lr){4-4} \cmidrule(lr){5-5} \cmidrule(lr){6-6}
+Falcon 7B & -0.271 & 0.036 & 0.023 & -0.253 & 0.310\\
+Falcon 40B & -0.202 & 0.070 & 0.198 & 0.084 & 0.307\\
+Llama 2 7B & 0.625 & 0.829 & 0.945 & 0.410 & 0.307\\
+Llama 2 70B & 0.132 & 0.582 & -0.376 & 0.964 & 0.994\\
+Llama 3.0 8B & 0.305 & 0.084 & -0.258 & 0.133 & 0.317\\
+Llama 3.0 70B & -0.382 & -0.365 & -0.376 & 0.991 & 0.519\\
+Llama 3.1 8B & 0.021 & -0.310 & 0.226 & 0.386 & 0.310\\
+Llama 3.1 70B & 0.139 & 0.090 & 0.094 & 0.072 & 0.310\\
+Mistral 7B & 1.000 & 0.486 & -0.376 & 0.991 & 1.000\\
+Mixtral 8x7B & 0.951 & 0.986 & -0.376 & 0.916 & 0.307\\
+SOLAR 10.7B & 0.958 & -0.365 & 1.000 & 0.530 & 0.307\\
+Yi 6B & -0.382 & 0.774 & 0.682 & 0.301 & 0.380\\
+Yi 34B & 0.298 & 0.136 & 0.184 & 0.157 & 0.390\\
+GPT-3.5 Turbo & 0.278 & 0.678 & 0.108 & 0.867 & 0.307\\
+GPT-4o & -0.382 & -0.365 & 0.233 & 0.999 & 0.307\\
+\bottomrule
+\end{tabular}
+\end{table*}

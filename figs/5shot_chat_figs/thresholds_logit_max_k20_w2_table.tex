@@ -1,0 +1,24 @@
+\begin{table*}[h]
+\caption{Thresholds for each model on each dataset (conservative scoring, M). }
+\label{tab:thresholds_logit_max_k20_w2}
+\centering
+\begin{tabular}{l S[table-format=3.1] S[table-format=3.1] S[table-format=3.1] S[table-format=3.1] S[table-format=3.1]}
+\toprule
+LLM & ARC-Challenge & HellaSwag & MMLU & TruthfulQA & WinoGrande \\ 
+\cmidrule(lr){1-1} \cmidrule(lr){2-2} \cmidrule(lr){3-3} \cmidrule(lr){4-4} \cmidrule(lr){5-5} \cmidrule(lr){6-6}
+Falcon 7B & 1.8 & 1.2 & 2.0 & 2.0 & 2.1\\
+Falcon 40B & 15.2 & 15.2 & 14.6 & 14.6 & 15.1\\
+Llama 2 7B & 14.4 & 15.5 & 14.4 & 17.5 & 20.7\\
+Llama 2 70B & 19.0 & 20.0 & 20.2 & 22.2 & 23.6\\
+Llama 3.0 8B & 30.1 & 32.1 & 30.2 & 29.4 & 33.4\\
+Llama 3.0 70B & -5.6 & -6.2 & 33.6 & 39.8 & 36.6\\
+Llama 3.1 8B & 29.3 & 29.2 & 31.9 & 29.9 & 31.9\\
+Llama 3.1 70B & 31.1 & -6.2 & -5.8 & 32.4 & 29.5\\
+Mistral 7B & 25.9 & 24.7 & 28.3 & 27.9 & 21.4\\
+Mixtral 8x7B & 33.9 & 29.7 & 30.7 & 41.2 & 22.4\\
+SOLAR 10.7B & 22.1 & -6.2 & 25.4 & 28.2 & 22.1\\
+Yi 6B & 18.3 & 18.4 & 17.8 & 19.0 & 17.7\\
+Yi 34B & 23.4 & 23.9 & 23.9 & 23.5 & 20.4\\
+\bottomrule
+\end{tabular}
+\end{table*}

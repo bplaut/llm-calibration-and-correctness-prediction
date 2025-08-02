@@ -1,63 +1,74 @@
 import os
 import shutil
 import sys
+import re
 
-def copy_files(output_directory, filepaths):
+def copy_files(output_directory, filepaths, datasets):
     # Check if output directory exists, if not, create it
     if not os.path.exists(output_directory):
         os.makedirs(output_directory)
+    for dataset in datasets:
+        dataset_dir = os.path.join(output_directory, dataset)
+        if not os.path.exists(dataset_dir):
+            os.makedirs(dataset_dir)
 
     for filepath in filepaths:
-        extensions = ['.pdf', '.png', '.tex']
-        for extension in extensions:
-            full_path = filepath + extension
-            if os.path.isfile(full_path):
-                # Copy file to output directory
-                base_name = os.path.basename(full_path)[:-4]
-                dir_name = os.path.dirname(full_path)
-                prompt_str = '' if 'prompt' in base_name else '_first_prompt' if 'first_prompt' in dir_name else '_second_prompt' if 'second_prompt' in dir_name else ''
-                logit_str = '' if ('logit' in base_name.lower() or 'MSP' in base_name) else '_norm_logits' if 'norm_logits' in dir_name else '_raw_logits' if 'raw_logits' in dir_name else ''
-                new_path = os.path.join(output_directory, base_name + prompt_str + logit_str + extension)
-                shutil.copy(full_path, new_path)
-                print("Successfully copied", new_path)
+        if os.path.exists(filepath):
+            base_name = os.path.basename(filepath)
+            new_path = os.path.join(output_directory, base_name)
+            for dataset in datasets:
+                if dataset in filepath:
+                    new_path = os.path.join(output_directory, dataset, base_name)
+            shutil.copy(filepath, new_path)
+            print(f"* Successfully copied {filepath}")
 
 def main():
     if len(sys.argv) != 3:
         print("Usage: python copy_important_figs.py <input_dir> <output_directory>")
         sys.exit(1)
     input_dir = sys.argv[1]
+    input_subdir_False = input_dir + '/collapse_False'
+    input_subdir_True = input_dir + '/collapse_True'
     output_dir = sys.argv[2]
+    file_list = []
+    dir_list = []
+    datasets = ['arc', 'hellaswag', 'mmlu', 'truthfulqa', 'winogrande']
+    dataset_dirs = datasets + ['main_figs']
 
-    cross_group_dir = input_dir + '/main_figs/cross_group_plots'
-    suffixes = ['/no_abst_all/auc_vs_acc-no_abst_norm_logits-no_abst_raw_logits',
-                '/no_abst_norm_logits/auc_vs_size_all_datasets_MSP',
-                '/no_abst_raw_logits/auc_vs_size_all_datasets_Max_Logit',
-                '/no_abst_norm_logits/auc_vs_acc_all_datasets_MSP',
-                '/no_abst_norm_logits/auc_vs_acc-no_abst_norm_logits_second_prompt-no_abst_norm_logits_first_prompt',
-                '/no_abst_raw_logits/auc_vs_acc_all_datasets_Max_Logit',
-                '/no_abst_raw_logits/auc_vs_acc-no_abst_raw_logits_second_prompt-no_abst_raw_logits_first_prompt',
-                 ]
-    file_list = [cross_group_dir + suffix for suffix in suffixes] + [input_dir + '/main_figs/' + suffix for suffix in suffixes]
-    file_list += [input_dir + '/main_figs/no_abst_dataset']
-    file_list += [input_dir + '/main_figs/frac-correct_vs_msp_uniform']
-    file_list += [input_dir + '/main_figs/frac-correct_vs_msp_quantile']
-    file_list += [input_dir + '/main_figs/calibration_table_uniform']
-    file_list += [input_dir + '/main_figs/calibration_table_quantile']
-    file_list += [input_dir + '/main_figs/calib_vs_acc_all_datasets']
-    file_list += [input_dir + '/main_figs/calib_vs_size_all_datasets']
-    file_list += [input_dir + '/main_figs/no_abst_dataset_bar']
-    datasets = ['arc', 'hellaswag', 'mmlu', 'truthfulqa', 'winogrande', 'piqa', 'no_winogrande']
-    middle_dirs = ['_norm_logits_first_prompt', '_norm_logits_second_prompt', '_raw_logits_first_prompt', '_raw_logits_second_prompt', '_norm_logits', '_raw_logits']
-    for middle_dir in middle_dirs:
-        file_list += [f'{input_dir}/main_figs/no_abst{middle_dir}/test/score_vs_conf_all_datasets']
-        file_list += [f'{input_dir}/main_figs/no_abst{middle_dir}/test/harsh-score_vs_conf_all_datasets']
-    for overall_cross_group_dir in ['all', 'None']:
-        file_list += [cross_group_dir + f'/no_abst_{overall_cross_group_dir}/auroc_table', cross_group_dir + f'/no_abst_{overall_cross_group_dir}/auc_vs_acc-no_abst_raw_logits-no_abst_norm_logits']
-        file_list += [cross_group_dir + f'/no_abst_{overall_cross_group_dir}/score_table']
-        file_list += [cross_group_dir + f'/no_abst_{overall_cross_group_dir}/pct_abstained_table']
-        file_list += [f'{input_dir}/{dataset}/cross_group_plots/no_abst_{overall_cross_group_dir}/{dataset}_auroc_table' for dataset in datasets]
-        file_list += [f'{input_dir}/{dataset}/cross_group_plots/no_abst_{overall_cross_group_dir}/{dataset}_score_table' for dataset in datasets]
-        file_list += [f'{input_dir}/{dataset}/cross_group_plots/no_abst_{overall_cross_group_dir}/{dataset}_pct_abstained_table' for dataset in datasets]
-    copy_files(output_dir, file_list)
+    # AUROC: use collapse_prompts=False
+    file_list.append(input_subdir_False + '/main_figs/dataset_table.tex')
+    for dataset in dataset_dirs:
+        main_dir = input_subdir_False + '/' + dataset
+        dir_list.append(main_dir + '/mega_group_plots')
+        dir_list.append(main_dir + '/pairwise_group_plots')
+
+    # Q&A with abstention and calibration: use collapse_prompts=True
+    for dataset in dataset_dirs:
+        main_dir = input_subdir_True + '/' + dataset
+        table_prefix = '' if dataset == 'main_figs' else dataset + '_'
+        for conf_type in ['max', 'margin']:
+            for measure_type in ['score', 'pct_abstained']:
+                file_list.append(main_dir + f'/{measure_type}_{table_prefix}{conf_type}_k20_table.tex')
+        dir_list.append(main_dir + '/num_train_plots')
+        plot_dir = main_dir + '/single_group_plots'
+        if os.path.exists(plot_dir):
+            for directory in os.listdir(plot_dir):
+                new_path = os.path.join(plot_dir, directory)
+                if os.path.isdir(new_path):
+                    dir_list.append(new_path)
+                    dir_list.append(new_path + '/test') # Add the score plots from the test directory
+                        
+    # Add all files in the dir_list (and subdirectories). However, only include files that either (1) don't have the k[number] pattern, i.e., don't relate to training data (like AUROC), or (2) have num_train = 20.
+    for directory in dir_list:
+        for root, _, files in os.walk(directory):
+            for f in files:
+                pattern = r'^(?!.*k\d).*$|^(?=.*k20(?!\d)).*$'
+                if re.match(pattern, f) and ('collapse_False' in directory or 'auc' not in f):
+                    # only include AUROC files for collapse_False
+                    file_list.append(os.path.join(root, f))
+                    if 'auc' in f:
+                        print(f"Added {os.path.join(root, f)} to file list")
+                    
+    copy_files(output_dir, file_list, datasets)
 
 main()

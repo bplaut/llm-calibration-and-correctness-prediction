@@ -1,0 +1,24 @@
+\begin{table*}[h]
+\centering
+\begin{tabular}{lcc}
+\toprule
+LLM & Q\&A accuracy & Calibration error \\ 
+\cmidrule(lr){1-1} \cmidrule(lr){2-2} 
+Falcon 7B base & 30.4 & 8.9\\
+Falcon 40B base & 35.3 & 15.9\\
+Llama 2 7B base & 32.3 & 13.8\\
+Llama 2 70B base & 51.3 & 7.7\\
+Llama 3.0 8B base & 47.7 & 6.5\\
+Llama 3.0 70B base & 62.3 & 7.8\\
+Llama 3.1 8B base & 46.9 & 16.5\\
+Llama 3.1 70B base & 62.7 & 15.5\\
+Mistral 7B base & 48.4 & 13.0\\
+Mixtral 8x7B base & 51.7 & 10.6\\
+SOLAR 10.7B base & 67.8 & 9.6\\
+Yi 6B base & 37.2 & 4.9\\
+Yi 34B base & 44.6 & 12.8\\
+\bottomrule
+\end{tabular}
+\caption{Calibration error and Q\&A accuracy for each model.}
+\label{tab:calibration__platt_prob_max__k20}
+\end{table*}

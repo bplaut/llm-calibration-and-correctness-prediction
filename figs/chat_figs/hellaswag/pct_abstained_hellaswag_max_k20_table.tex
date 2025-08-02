@@ -1,0 +1,27 @@
+\begin{table*}[h]
+\caption{Frequency of abstention on hellaswag_ in the Section~\ref{sec:abstain} experiments.}
+\label{tab:pct_abstained_hellaswag_max_k20}
+\centering
+\begin{tabular}{l S[table-format=3.1] S[table-format=3.1] S[table-format=3.1] S[table-format=3.1] S[table-format=3.1] S[table-format=3.1]}
+\toprule
+& \multicolumn{3}{c}{Balanced} & \multicolumn{3}{c}{Conservative} \\ 
+\multicolumn{1}{c}{LLM} & \multicolumn{1}{c}{No abstain} & \multicolumn{1}{c}{MSP} & \multicolumn{1}{c}{Max Logit} & \multicolumn{1}{c}{No abstain} & \multicolumn{1}{c}{MSP} & \multicolumn{1}{c}{Max Logit} \\ 
+\cmidrule(lr){1-1}\cmidrule(lr){2-4}\cmidrule(lr){5-7} 
+Falcon 7B & 0 & 96.6 & 70.9 & 0 & 96.6 & 70.9\\
+Falcon 40B & 0 & 91.9 & 90.0 & 0 & 91.9 & 90.0\\
+Llama 2 7B & 0 & 91.8 & 99.7 & 0 & 91.8 & 99.7\\
+Llama 2 70B & 0 & 4.5 & 1.0 & 0 & 32.2 & 22.7\\
+Llama 3.0 8B & 0 & 33.0 & 0.0 & 0 & 33.0 & 55.5\\
+Llama 3.0 70B & 0 & 0.0 & 8.7 & 0 & 10.1 & 8.7\\
+Llama 3.1 8B & 0 & 12.7 & 8.6 & 0 & 21.8 & 55.0\\
+Llama 3.1 70B & 0 & 4.6 & 0.0 & 0 & 4.6 & 13.9\\
+Mistral 7B & 0 & 5.1 & 22.9 & 0 & 100.0 & 56.5\\
+Mixtral 8x7B & 0 & 8.0 & 73.2 & 0 & 89.1 & 73.2\\
+SOLAR 10.7B & 0 & 0.0 & 0.0 & 0 & 0.0 & 0.0\\
+Yi 6B & 0 & 93.7 & 98.8 & 0 & 93.7 & 98.8\\
+Yi 34B & 0 & 24.7 & 41.7 & 0 & 24.7 & 57.3\\
+GPT-3.5 Turbo & 0 & 5.6 &  & 0 & 32.4 & \\
+GPT-4o & 0 & 0.0 &  & 0 & 0.0 & \\
+\bottomrule
+\end{tabular}
+\end{table*}

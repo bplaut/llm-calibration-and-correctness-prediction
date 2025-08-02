@@ -1,0 +1,27 @@
+\begin{table*}[h]
+\caption{Q\&A with abstention results for truthfulqa_. See Table~\ref{tab:score} for an explanation of the scoring scheme.}
+\label{tab:score_truthfulqa_margin_k20}
+\centering
+\begin{tabular}{l S[table-format=3.1] S[table-format=3.1] S[table-format=3.1] S[table-format=3.1] S[table-format=3.1] S[table-format=3.1]}
+\toprule
+& \multicolumn{3}{c}{Balanced} & \multicolumn{3}{c}{Conservative} \\ 
+\multicolumn{1}{c}{LLM} & \multicolumn{1}{c}{No abstain} & \multicolumn{1}{c}{MSP} & \multicolumn{1}{c}{Max Logit} & \multicolumn{1}{c}{No abstain} & \multicolumn{1}{c}{MSP} & \multicolumn{1}{c}{Max Logit} \\ 
+\cmidrule(lr){1-1}\cmidrule(lr){2-4}\cmidrule(lr){5-7} 
+Falcon 7B & -54.8 & -10.3 & -9.3 & -132.2 & -25.6 & -21.7\\
+Falcon 40B & -36.2 & -0.7 & -1.5 & -104.3 & -3.7 & -5.6\\
+Llama 2 7B & -49.6 & -30.0 & -27.1 & -124.3 & -6.9 & -7.3\\
+Llama 2 70B & -7.4 & 13.1 & 13.8 & -61.2 & 0.1 & -1.4\\
+Llama 3.0 8B & -15.2 & -0.6 & 1.2 & -72.9 & 1.5 & 2.4\\
+Llama 3.0 70B & 44.9 & 46.3 & 31.3 & 17.3 & 37.8 & 28.1\\
+Llama 3.1 8B & 7.7 & 21.4 & 22.4 & -38.5 & 7.2 & 9.0\\
+Llama 3.1 70B & 48.0 & 48.7 & 49.8 & 21.9 & 36.1 & 43.4\\
+Mistral 7B & 10.2 & 19.1 & 19.5 & -34.8 & -9.3 & -8.4\\
+Mixtral 8x7B & 37.3 & 40.3 & 40.4 & 5.9 & 13.8 & 26.6\\
+SOLAR 10.7B & 4.7 & 8.7 & 19.0 & -42.9 & -32.9 & 5.3\\
+Yi 6B & -20.4 & -2.2 & -2.5 & -80.7 & 1.0 & -31.4\\
+Yi 34B & 21.7 & 23.7 & 23.7 & -17.5 & 23.5 & 24.0\\
+GPT-3.5 Turbo & 11.8 & 24.7 &  & -32.3 & 10.9 & \\
+GPT-4o & 68.2 & 65.2 &  & 52.2 & 58.6 & \\
+\bottomrule
+\end{tabular}
+\end{table*}

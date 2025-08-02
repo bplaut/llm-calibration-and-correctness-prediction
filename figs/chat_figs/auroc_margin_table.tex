@@ -1,0 +1,27 @@
+\begin{table*}[h]
+\caption{AUROC results using the margin of softmax probabilities and margin of logits instead of the MSP and maximum logit, respectively. See Table~\ref{tab:auroc} for explanation of the $p$-values.}
+\label{tab:auroc_margin}
+\centering
+\begin{tabular}{lccccc}
+\toprule
+& & \multicolumn{2}{c}{Probability margin} & \multicolumn{2}{c}{Logit margin} \\ 
+LLM & Q\&A accuracy & AUROC & $p < 10^{-4}$ & AUROC & $p < 10^{-4}$ \\ 
+\cmidrule(lr){1-1} \cmidrule(lr){2-2} \cmidrule(lr){3-4} \cmidrule(lr){5-6} 
+Falcon 7B & 30.1 & 50.1 & 0/10 & 49.6 & 0/10\\
+Falcon 40B & 40.5 & 59.2 & 5/10 & 58.7 & 5/10\\
+Llama 2 7B & 39.7 & 58.3 & 6/10 & 58.1 & 6/10\\
+Llama 2 70B & 58.7 & 71.0 & 10/10 & 71.0 & 10/10\\
+Llama 3.0 8B & 59.1 & 71.1 & 10/10 & 70.9 & 10/10\\
+Llama 3.0 70B & 78.8 & 81.3 & 10/10 & 81.3 & 10/10\\
+Llama 3.1 8B & 62.0 & 72.9 & 10/10 & 72.7 & 10/10\\
+Llama 3.1 70B & 80.6 & 83.4 & 10/10 & 83.4 & 10/10\\
+Mistral 7B & 57.0 & 66.2 & 10/10 & 66.2 & 10/10\\
+Mixtral 8x7B & 69.9 & 70.0 & 10/10 & 70.1 & 10/10\\
+SOLAR 10.7B & 67.5 & 71.8 & 10/10 & 71.9 & 10/10\\
+Yi 6B & 49.6 & 66.0 & 10/10 & 65.4 & 10/10\\
+Yi 34B & 69.1 & 75.6 & 10/10 & 75.5 & 10/10\\
+GPT-3.5 Turbo & 67.5 & 76.0 & 10/10 &  &\\
+GPT-4o & 86.9 & 85.3 & 10/10 & & \\
+\bottomrule
+\end{tabular}
+\end{table*}

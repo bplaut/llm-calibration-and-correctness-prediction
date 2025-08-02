@@ -1,0 +1,27 @@
+\begin{table*}[h]
+\caption{AUROC results for ARC-Challenge. See Table~\ref{tab:auroc} for explanation of the $p$-values.}
+\label{tab:auroc_max}
+\centering
+\begin{tabular}{lccccc}
+\toprule
+& & \multicolumn{2}{c}{MSP} & \multicolumn{2}{c}{Max Logit} \\ 
+LLM & Q\&A accuracy & AUROC & $p < 10^{-4}$ & AUROC & $p < 10^{-4}$ \\ 
+\cmidrule(lr){1-1} \cmidrule(lr){2-2} \cmidrule(lr){3-4} \cmidrule(lr){5-6} 
+Falcon 7B & 27.1 & 52.1 & 0/2 & 51.3 & 0/2\\
+Falcon 40B & 47.8 & 68.7 & 2/2 & 67.1 & 2/2\\
+Llama 2 7B & 43.5 & 63.6 & 2/2 & 62.2 & 2/2\\
+Llama 2 70B & 73.7 & 78.7 & 2/2 & 74.3 & 2/2\\
+Llama 3.0 8B & 75.8 & 81.5 & 2/2 & 79.4 & 2/2\\
+Llama 3.0 70B & 92.5 & 89.3 & 2/2 & 77.6 & 2/2\\
+Llama 3.1 8B & 76.6 & 82.5 & 2/2 & 77.6 & 2/2\\
+Llama 3.1 70B & 93.2 & 90.7 & 2/2 & 79.3 & 2/2\\
+Mistral 7B & 70.7 & 72.1 & 2/2 & 68.9 & 2/2\\
+Mixtral 8x7B & 83.4 & 78.8 & 2/2 & 65.9 & 2/2\\
+SOLAR 10.7B & 79.5 & 76.8 & 2/2 & 71.1 & 2/2\\
+Yi 6B & 65.8 & 75.1 & 2/2 & 60.8 & 2/2\\
+Yi 34B & 82.4 & 84.9 & 2/2 & 74.2 & 2/2\\
+GPT-3.5 Turbo & 83.6 & 84.5 & 2/2 &  & \\
+GPT-4o & 96.3 & 91.9 & 2/2 &  &\\
+\bottomrule
+\end{tabular}
+\end{table*}

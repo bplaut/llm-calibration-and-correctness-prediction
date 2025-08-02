@@ -1,0 +1,27 @@
+\begin{table*}[h]
+\caption{Q\&A with abstention results for mmlu_. See Table~\ref{tab:score} for an explanation of the scoring scheme.}
+\label{tab:score_mmlu_margin_k20}
+\centering
+\begin{tabular}{l S[table-format=3.1] S[table-format=3.1] S[table-format=3.1] S[table-format=3.1] S[table-format=3.1] S[table-format=3.1]}
+\toprule
+& \multicolumn{3}{c}{Balanced} & \multicolumn{3}{c}{Conservative} \\ 
+\multicolumn{1}{c}{LLM} & \multicolumn{1}{c}{No abstain} & \multicolumn{1}{c}{MSP} & \multicolumn{1}{c}{Max Logit} & \multicolumn{1}{c}{No abstain} & \multicolumn{1}{c}{MSP} & \multicolumn{1}{c}{Max Logit} \\ 
+\cmidrule(lr){1-1}\cmidrule(lr){2-4}\cmidrule(lr){5-7} 
+Falcon 7B & -48.7 & -0.3 & -0.2 & -123.1 & -0.8 & -0.5\\
+Falcon 40B & -16.9 & -1.3 & -0.6 & -75.3 & 2.9 & 2.1\\
+Llama 2 7B & -21.3 & 6.2 & 6.0 & -81.9 & 1.4 & 1.5\\
+Llama 2 70B & 11.5 & 11.5 & 11.5 & -32.7 & 13.8 & 13.8\\
+Llama 3.0 8B & 12.6 & 18.2 & 18.2 & -31.0 & 18.1 & 18.2\\
+Llama 3.0 70B & 49.6 & 49.6 & 49.6 & 24.4 & 43.2 & 43.3\\
+Llama 3.1 8B & 15.9 & 27.9 & 27.8 & -26.2 & 19.8 & 19.6\\
+Llama 3.1 70B & 58.6 & 61.2 & 60.1 & 37.9 & 48.2 & 48.5\\
+Mistral 7B & 6.1 & 6.1 & 6.1 & -40.9 & -20.9 & -20.7\\
+Mixtral 8x7B & 31.2 & 31.2 & 31.2 & -3.1 & -3.1 & 12.3\\
+SOLAR 10.7B & 14.9 & 21.5 & 24.5 & -27.6 & 0.0 & 10.5\\
+Yi 6B & -2.2 & 10.7 & 11.8 & -53.4 & 2.2 & -0.1\\
+Yi 34B & 25.5 & 29.4 & 30.1 & -11.8 & 18.1 & 19.0\\
+GPT-3.5 Turbo & 31.0 & 37.9 &  & -3.5 & 29.8 & \\
+GPT-4o & 68.3 & 68.5 &  & 52.5 & 52.9 & \\
+\bottomrule
+\end{tabular}
+\end{table*}

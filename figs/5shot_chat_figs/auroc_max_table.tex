@@ -1,0 +1,27 @@
+\begin{table*}[h]
+\caption{AUROC results for 5-shot prompting for chat models. See Table~\ref{tab:auroc} for an explanation of the $p$-values.}
+\label{tab:auroc_max}
+\centering
+\begin{tabular}{lccccc}
+\toprule
+& & \multicolumn{2}{c}{MSP} & \multicolumn{2}{c}{Max Logit} \\ 
+LLM & Q\&A accuracy & AUROC & $p < 10^{-4}$ & AUROC & $p < 10^{-4}$ \\ 
+\cmidrule(lr){1-1} \cmidrule(lr){2-2} \cmidrule(lr){3-4} \cmidrule(lr){5-6} 
+Falcon 7B & 29.6 & 52.0 & 1/10 & 51.2 & 0/10\\
+Falcon 40B & 37.9 & 61.5 & 10/10 & 58.5 & 8/10\\
+Llama 2 7B & 29.8 & 50.8 & 0/10 & 50.7 & 0/10\\
+Llama 2 70B & 45.6 & 61.1 & 8/10 & 59.8 & 8/10\\
+Llama 3.0 8B & 40.7 & 58.5 & 8/10 & 59.4 & 7/10\\
+Llama 3.0 70B & 65.4 & 70.0 & 10/10 & 58.2 & 7/10\\
+Llama 3.1 8B & 51.4 & 65.3 & 10/10 & 61.3 & 10/10\\
+Llama 3.1 70B & 67.7 & 71.2 & 10/10 & 58.2 & 7/10\\
+Mistral 7B & 48.0 & 61.7 & 10/10 & 60.2 & 9/10\\
+Mixtral 8x7B & 57.6 & 63.1 & 10/10 & 54.5 & 4/10\\
+SOLAR 10.7B & 58.4 & 66.5 & 10/10 & 62.0 & 10/10\\
+Yi 6B & 39.2 & 61.6 & 9/10 & 57.8 & 6/10\\
+Yi 34B & 54.8 & 65.2 & 10/10 & 62.0 & 10/10\\
+GPT-3.5 Turbo & 58.8 & 69.4 & 10/10 &  &\\
+GPT-4o & 73.2 & 71.2 & 10/10 &  & \\
+\bottomrule
+\end{tabular}
+\end{table*}

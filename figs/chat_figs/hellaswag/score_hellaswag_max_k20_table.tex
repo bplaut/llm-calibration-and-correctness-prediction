@@ -1,0 +1,27 @@
+\begin{table*}[h]
+\caption{Q\&A with abstention results for HellaSwag. See Table~\ref{tab:score} for an explanation of the scoring scheme.}
+\label{tab:score_hellaswag_max_k20}
+\centering
+\begin{tabular}{l S[table-format=3.1] S[table-format=3.1] S[table-format=3.1] S[table-format=3.1] S[table-format=3.1] S[table-format=3.1]}
+\toprule
+& \multicolumn{3}{c}{Balanced} & \multicolumn{3}{c}{Conservative} \\ 
+\multicolumn{1}{c}{LLM} & \multicolumn{1}{c}{No abstain} & \multicolumn{1}{c}{MSP} & \multicolumn{1}{c}{Max Logit} & \multicolumn{1}{c}{No abstain} & \multicolumn{1}{c}{MSP} & \multicolumn{1}{c}{Max Logit} \\ 
+\cmidrule(lr){1-1}\cmidrule(lr){2-4}\cmidrule(lr){5-7} 
+Falcon 7B & -49.9 & -1.3 & -14.4 & -124.9 & -3.6 & -36.2\\
+Falcon 40B & -39.2 & -1.0 & 0.1 & -108.9 & -5.6 & -4.9\\
+Llama 2 7B & -22.6 & 1.5 & 0.1 & -83.9 & -1.8 & 0.0\\
+Llama 2 70B & 34.7 & 35.9 & 34.9 & 2.0 & 21.8 & 16.7\\
+Llama 3.0 8B & 30.3 & 34.4 & 30.3 & -4.6 & 18.1 & 13.6\\
+Llama 3.0 70B & 57.4 & 57.4 & 56.2 & 36.1 & 43.2 & 38.6\\
+Llama 3.1 8B & 28.8 & 32.1 & 29.5 & -6.8 & 10.5 & 10.1\\
+Llama 3.1 70B & 56.8 & 57.6 & 56.8 & 35.2 & 38.8 & 33.1\\
+Mistral 7B & 5.1 & 6.6 & 10.0 & -42.4 & 0.0 & -4.9\\
+Mixtral 8x7B & 38.1 & 39.7 & 12.9 & 7.1 & 5.6 & 6.0\\
+SOLAR 10.7B & 61.7 & 61.7 & 61.7 & 42.6 & 42.6 & 42.6\\
+Yi 6B & -30.0 & 2.9 & 0.4 & -95.1 & 1.2 & 0.0\\
+Yi 34B & 44.3 & 45.8 & 37.0 & 16.4 & 31.1 & 23.8\\
+GPT-3.5 Turbo & 42.0 & 43.6 &  & 13.1 & 32.3 & \\
+GPT-4o & 76.6 & 76.6 &  & 64.9 & 64.9 & \\
+\bottomrule
+\end{tabular}
+\end{table*}

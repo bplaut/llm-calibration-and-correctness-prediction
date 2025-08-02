@@ -18,8 +18,8 @@ options:
   -m MODEL, --model MODEL
                         Which LLM to use. Check this file for currently supported options and/or add your own.
   -p PROMPTS, --prompts PROMPTS
-                        List of prompts, separated by |. For example "Hello my name is Ben|What a time to be
-                        alive". If not provided, you will be asked for a prompt by command line.
+                        List of prompts, separated by |. For example "This is a prompt|What a time to be
+                        alive".
   -n MAX_NEW_TOKENS, --max_new_tokens MAX_NEW_TOKENS
                         Number of new tokens to generate on top of the prompt
   -k NUM_TOP_TOKENS, --num_top_tokens NUM_TOP_TOKENS
@@ -46,12 +46,14 @@ options:
                         When running a Q&A test, how many in-context examples to provide?
 ```
 
-# Post-processing Q&A results
-There are also some files for post-processing. The first is plot_data.py, which has the following usage:
+# Running analysis
+The main python file for the analysis is (unsurprisingly) analysis_main.py, which has the following usage:
 ```
-python plot_data.py <output_directory> <dataset1,dataset2,...> <collapse_prompts> <data_file1> [<data_file2> ...]
+python analysis_main.py <output_directory> <dataset1,dataset2,...> <collapse_prompts> <data_file1> [<data_file2> ...]
 ```
-If collapse_prompts=True, we group the data from the two prompt phrasings together. We set collapse_prompts=False for the AUROC analysis (because it's nonlinear), but set collapse_prompt=True for the score plots (because those are linear).
+If collapse_prompts=True, we group the data from the two prompt phrasings together. We set collapse_prompts=False for the AUROC analysis (because it's nonlinear), but set collapse_prompt=True for the Q&A-with-abstention analysis (because those are linear). We also collapse prompts for the calibration analysis because it's kind of weird to make a separate calibration curve for each plot and average them. You probably don't need to worry about this because you should probably just use the bash scripts below, which will automatically use collapse_prompts=True/False in the appropriate places.
+
+The files plotting_functions.py and utils.py are called by analysis_main.py. (Note that utils.py is also used briefly in generate_text.py.)
 
 There is also statistical_tests.py, which computes the p-values and has the following usage:
 ```
@@ -59,34 +61,36 @@ python statistical_tests.py [-h] --option OPTION --input_dir INPUT_DIR
 ```
 The OPTION parameter determines which tests are run and the INPUT_DIR tells the script where the data files are. See statistical_tests.py for more details.
 
-Lastly, results_analysis.ipynb groups the p-values to create the tables in the paper.
+The analysis_main.py will generate a lot of figures, and we aren't using them all in the paper, so copy_important_figs.py automatically copies the relevant figures into a specified directory.
 
 # Batching scripts
 
-It is tedious to call these python files individually for all the combinations of experiments and plots we want to run. For this reason, we have the following two bash scripts:
+It is tedious to call these python files individually for all the experiments and analyses we want to run. For this reason, we have the following two bash scripts:
 1. run_qa_tests.sh, which calls take_qa_test.py (which in turn calls generate_text.py). Usage:
 ```
-./run_qa_tests.sh <comma-separated model names> <comma-separated dataset names> <comma-separated question ranges> prompt_phrasing one_shot
+./run_qa_tests.sh <comma-separated model names> <comma-separated dataset names> <comma-separated question ranges> prompt_phrasing few_shot
 ```
 For example, to run all of the experiments for the first prompt phrasing and zero-shot, the command would be
 ```
-./run_qa_tests.sh Llama-7b,Llama-13b,Llama-70b,Llama3-8b,Llama3-70b,Falcon-7b,Falcon-40b,Mistral,Mixtral,Solar,Yi-6b,Yi-34b,gpt-3.5-turbo,gpt-4-turbo arc,hellaswag,mmlu,truthfulqa,winogrande 0-1000,1000-2000,2000-3000,3000-4000,4000-5000,5000-6000 0 False
+./run_qa_tests.sh Falcon-7b,Falcon-40b,Llama3-8b,Llama3-70b,Llama3.1-8b,Llama3.1-70b,Llama-7b,Llama-70b,Mistral,Mixtral,Solar,Yi-6b,Yi-34b,gpt-3.5-turbo,gpt-4o arc,hellaswag,mmlu,truthfulqa,winogrande 0-1000,1000-2000,2000-3000,3000-4000,4000-5000,5000-6000 0 False
 ```
-To run the second prompt, one would replace the final 0 with 1. To use one-shot prompting, one would replace the False with True.
+To run the second prompt, one would replace the final 0 with 1. To use five-shot prompting, one would replace the False with True.
 
 If you get an out-of-memory error, try reducing the batch sizes in run_qa_tests.sh.
 
-2. do_post_processing.sh, which calls plot_data.py, copy_important_figs.py, and statistal_tests.py. Usage:
+2. run_analysis.sh, which calls analysis_main.py, copy_important_figs.py, and statistal_tests.py. Usage:
 ```
-./do_post_processing <directory> <collapse_prompts>
+./run_analysis <input_dir> <all_figs_output_dir> <important_figs_output_dir>
 ```
-For example,
+For example, the command
 ```
-./do_post_processing main_results False
+./run_analysis chat_results all_figs important_figs
 ```
-The main_results directory contains the zero-shot results (which are used for the primary analysis), and one_shot_results contains the one-shot results.
-
-Currently, results_analysis.ipynb is not called by the scripts and must be run separately.
+will take as input the results files from main_results, save all figures to the all_figs directory, and copy the important figures (which mostly means the figures used in the paper) to important_figs. Relevant result files directories:
+- chat_results: zero shot results for chat models (used for primary analysis)
+- 5shot_chat_results: 5-shot results for chat models
+- base_results: zero shot results for base (i.e., non-fine-tuned) models
+- 5shot_base_results: 5-shot results for base models
 
 # Resource requirements
-We used NVIDIA RTX A6000 GPUs for our experiments, which has 48GB RAM. If you are using a GPU with less RAM, you may need to reduce the batch sizes in run_qa_tests.sh. Storing the models on disk also takes a lot of space, with the smallest (Yi 6B) taking up 12 GB, and the largest (Llama 3 70B) taking up 132 GB. With two A6000 GPUs, it took us about three weeks to run all of the zero-shot experiments from start to finish: fourteen models X 21,407 questions across five datasets X two prompt phrasings. Running the analogous one-shot experiments took about four weeks.
+We used NVIDIA RTX A6000 GPUs for our experiments, which has 48GB RAM. If you are using a GPU with less RAM, you may need to reduce the batch sizes in run_qa_tests.sh. Storing the models on disk also takes a lot of space, with the smallest (Falcon 7B) taking up 14 GB, and the largest (Llama 2 70B) taking up 224 GB. Running the experiments for the HuggingFace models took about 2000 GPU-hours time using A6000s, roughly equally split between the chat LLMs and base LLMs. Running the experiments for the OpenAI models cost about $120.

@@ -23,7 +23,7 @@ get_few_shot_number() {
     if [ "$few_shot_flag" = "False" ]; then
         echo 0
     else
-	echo 1
+	echo 5
     fi
 }
 
@@ -33,8 +33,8 @@ get_batch_size() {
     local dataset_name="$2"
     local batch_size
 
-    # remove -raw from the model name if it exists
-    model_name="${model_name/-raw/}"
+    # remove -base from the model name if it exists
+    model_name="${model_name/-base/}"
 
     case "$model_name" in
         "Llama-70b")
@@ -43,20 +43,23 @@ get_batch_size() {
         "Llama-7b")
             batch_size=40
             ;;
-        "Llama-13b")
-            batch_size=22
-            ;;
 	"Llama3-8b")
-	    batch_size=80
+	    batch_size=60
 	    ;;
 	"Llama3-70b")
-	    batch_size=13
+	    batch_size=9
+	    ;;
+	"Llama3.1-8b")
+	    batch_size=60
+	    ;;
+	"Llama3.1-70b")
+	    batch_size=9
 	    ;;
         "Falcon-40b")
-            batch_size=10
+            batch_size=6
             ;;
 	"Falcon-7b")
-	    batch_size=168
+	    batch_size=100
 	    ;;
 	"Mixtral")
 	    batch_size=63
@@ -65,7 +68,7 @@ get_batch_size() {
 	    batch_size=1
 	    ;;
         "Solar")
-	    batch_size=28
+	    batch_size=20
 	    ;;
         "Mistral")
             batch_size=128
@@ -75,14 +78,14 @@ get_batch_size() {
             ;;
     esac
 
-    # For some datasets, adjust batch sizes. +3 to ensure that it doesn't go to 0
+    # For some datasets, adjust batch sizes. +1 to ensure that it doesn't go to 0
     if [ "$dataset_name" = "mmlu" ]; then
         batch_size=$(( (batch_size / 3) + 1 ))
     fi
 
-    # If few_shot is True, reduce batch size to 2/3 of the original value. +1 to avoid 0
+    # If few_shot is True, reduce batch size to 1/4 of the original value. +1 to avoid 0
     if [ "$few_shot" = "True" ]; then
-		batch_size=$(( (batch_size * 2 / 3) + 1 ))
+		batch_size=$(( (batch_size / 4) + 1 ))
     fi
 
     echo "$batch_size"
@@ -105,18 +108,18 @@ do
             few_shot_number=$(get_few_shot_number "$dataset" "$few_shot")
 
             # Define log file name
-            log_file="logs/${model}_${dataset}_${question_range}_prompt-phrasing-${prompt_phrasing}"
+            log_file="logs/${dataset}_${model}_${question_range}_prompt-phrasing-${prompt_phrasing}"
 
             # Append "few_shot" to log file name if few_shot is True
             if [ "$few_shot" = "True" ]; then
-                log_file="${log_file}_few_shot"
+                log_file="${log_file}_few_shot_${few_shot_number}"
             fi
 
             log_file="${log_file}_log.txt"
 
             # Running the command with the arguments
             echo -e "\nRunning take_qa_test.py with arguments: --model=$model --dataset=$dataset --question_range=$question_range --batch_size=$batch_size --prompt_phrasing=$prompt_phrasing --few_shot_number=$few_shot_number"
-            python take_qa_test.py --model="$model" --dataset="$dataset" --question_range="$question_range" --batch_size="$batch_size" --prompt_phrasing="$prompt_phrasing" --few_shot_number="$few_shot_number" --max_new_tokens=100 --num_top_tokens=1 &> "$log_file"
+            python take_qa_test.py --model="$model" --dataset="$dataset" --question_range="$question_range" --batch_size="$batch_size" --prompt_phrasing="$prompt_phrasing" --few_shot_number="$few_shot_number" --max_new_tokens=5 --num_top_tokens=10 &> "$log_file"
         done
     done
 done

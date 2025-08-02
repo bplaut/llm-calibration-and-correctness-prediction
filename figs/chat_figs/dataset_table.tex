@@ -1,0 +1,16 @@
+\begin{table*}[h!]
+\caption{Average Q\&A accuracy, AUROCs, and calibration error per dataset. All values are averaged over the 15 models and two prompts.}
+\label{tab:dataset}
+\centering
+\begin{tabular}{lcccc}
+\toprule
+ & Q\&A accuracy & MSP AUROC & Max Logit AUROC & Calibration Error (x100) \\ 
+\cmidrule(lr){1-1} \cmidrule(lr){2-2} \cmidrule(lr){3-3} \cmidrule(lr){4-4} \cmidrule(lr){5-5}
+ARC-Challenge & 71.8 & 78.1 & 70.0 & 13.6\\
+HellaSwag & 60.1 & 71.0 & 63.9 & 19.6\\
+MMLU & 56.9 & 73.3 & 66.8 & 24.1\\
+TruthfulQA & 51.4 & 71.0 & 63.3 & 30.6\\
+WinoGrande & 60.8 & 60.8 & 54.8 & 24.2\\
+\bottomrule
+\end{tabular}
+\end{table*}

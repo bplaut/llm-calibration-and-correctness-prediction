@@ -1,0 +1,24 @@
+\begin{table*}[h]
+\caption{Thresholds for each model on each dataset (conservative scoring, M). }
+\label{tab:thresholds_prob_max_k20_w2}
+\centering
+\begin{tabular}{l S[table-format=3.1] S[table-format=3.1] S[table-format=3.1] S[table-format=3.1] S[table-format=3.1]}
+\toprule
+LLM & ARC-Challenge & HellaSwag & MMLU & TruthfulQA & WinoGrande \\ 
+\cmidrule(lr){1-1} \cmidrule(lr){2-2} \cmidrule(lr){3-3} \cmidrule(lr){4-4} \cmidrule(lr){5-5} \cmidrule(lr){6-6}
+Falcon 7B & 0.516 & 0.463 & 0.399 & 0.518 & 0.667\\
+Falcon 40B & 0.664 & 0.744 & 0.812 & 0.723 & 0.695\\
+Llama 2 7B & 0.615 & 0.348 & 0.645 & 0.644 & 0.712\\
+Llama 2 70B & 0.270 & 0.730 & 0.427 & 0.779 & 0.807\\
+Llama 3.0 8B & 0.425 & 0.524 & 0.496 & 0.597 & 0.506\\
+Llama 3.0 70B & 0.456 & 0.521 & 0.417 & 0.719 & 0.544\\
+Llama 3.1 8B & 0.608 & 0.389 & 0.441 & 0.656 & 0.736\\
+Llama 3.1 70B & 0.505 & 0.612 & 0.746 & 0.794 & 0.511\\
+Mistral 7B & 0.534 & 0.497 & 0.649 & 0.652 & 0.627\\
+Mixtral 8x7B & 0.558 & 0.436 & 0.507 & 0.905 & 0.904\\
+SOLAR 10.7B & 0.368 & 0.548 & 0.847 & 0.759 & 0.589\\
+Yi 6B & 0.938 & 0.906 & 0.961 & 0.921 & 0.967\\
+Yi 34B & 0.840 & 0.724 & 0.649 & 0.696 & 0.655\\
+\bottomrule
+\end{tabular}
+\end{table*}

@@ -1,0 +1,24 @@
+\begin{table*}[h]
+\caption{Thresholds for each model on each dataset (balanced scoring, M). }
+\label{tab:thresholds_prob_entropy_k20_w1}
+\centering
+\begin{tabular}{l S[table-format=3.1] S[table-format=3.1] S[table-format=3.1] S[table-format=3.1] S[table-format=3.1]}
+\toprule
+LLM & ARC-Challenge & HellaSwag & MMLU & TruthfulQA & WinoGrande \\ 
+\cmidrule(lr){1-1} \cmidrule(lr){2-2} \cmidrule(lr){3-3} \cmidrule(lr){4-4} \cmidrule(lr){5-5} \cmidrule(lr){6-6}
+Falcon 7B & -0.323 & -0.248 & -0.268 & -0.344 & 0.364\\
+Falcon 40B & -0.114 & 0.159 & 0.025 & 0.033 & 0.307\\
+Llama 2 7B & 0.083 & -0.347 & 0.037 & -0.334 & 0.310\\
+Llama 2 70B & -0.385 & 0.089 & -0.293 & 0.076 & 0.307\\
+Llama 3.0 8B & -0.305 & -0.198 & -0.232 & -0.194 & 0.307\\
+Llama 3.0 70B & -0.268 & -0.325 & -0.329 & -0.118 & 0.312\\
+Llama 3.1 8B & -0.317 & -0.330 & -0.274 & 0.010 & 0.307\\
+Llama 3.1 70B & -0.163 & -0.308 & 0.090 & 0.032 & 0.310\\
+Mistral 7B & 0.047 & -0.352 & 0.025 & 0.313 & 0.307\\
+Mixtral 8x7B & -0.336 & -0.308 & -0.274 & 0.442 & 0.386\\
+SOLAR 10.7B & -0.348 & -0.165 & -0.104 & -0.269 & 0.310\\
+Yi 6B & 0.716 & 0.516 & 0.673 & 0.636 & 0.677\\
+Yi 34B & 0.003 & 0.016 & 0.019 & 0.388 & 0.355\\
+\bottomrule
+\end{tabular}
+\end{table*}

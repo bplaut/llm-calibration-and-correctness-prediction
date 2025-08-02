@@ -1,0 +1,25 @@
+\begin{table*}[h]
+\caption{AUROC results for 5-shot prompting for base models. See Table~\ref{tab:auroc} for an explanation of the $p$-values.}
+\label{tab:auroc_max}
+\centering
+\begin{tabular}{lccccc}
+\toprule
+& & \multicolumn{2}{c}{MSP} & \multicolumn{2}{c}{Max Logit} \\ 
+LLM & Q\&A accuracy & AUROC & $p < 10^{-4}$ & AUROC & $p < 10^{-4}$ \\ 
+\cmidrule(lr){1-1} \cmidrule(lr){2-2} \cmidrule(lr){3-4} \cmidrule(lr){5-6} 
+Falcon 7B & 29.2 & 52.4 & 2/10 & 51.8 & 1/10\\
+Falcon 40B & 33.9 & 57.5 & 8/10 & 57.1 & 5/10\\
+Llama 2 7B & 35.3 & 57.3 & 6/10 & 53.2 & 4/10\\
+Llama 2 70B & 51.4 & 65.9 & 9/10 & 63.8 & 9/10\\
+Llama 3.0 8B & 45.0 & 62.7 & 6/10 & 59.3 & 6/10\\
+Llama 3.0 70B & 53.4 & 66.3 & 10/10 & 63.0 & 10/10\\
+Llama 3.1 8B & 46.6 & 65.4 & 9/10 & 60.9 & 8/10\\
+Llama 3.1 70B & 49.6 & 64.5 & 10/10 & 61.9 & 10/10\\
+Mistral 7B & 46.0 & 62.5 & 8/10 & 58.3 & 6/10\\
+Mixtral 8x7B & 51.1 & 64.5 & 10/10 & 56.2 & 6/10\\
+SOLAR 10.7B & 60.6 & 70.8 & 10/10 & 64.4 & 10/10\\
+Yi 6B & 29.4 & 59.2 & 8/10 & 53.9 & 4/10\\
+Yi 34B & 35.6 & 65.5 & 10/10 & 60.7 & 9/10\\
+\bottomrule
+\end{tabular}
+\end{table*}

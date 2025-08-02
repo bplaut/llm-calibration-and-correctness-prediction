@@ -1,0 +1,27 @@
+\begin{table*}[h]
+\caption{AUROC results for truthfulqa_. See Table~\ref{tab:auroc} for more explanation.}
+\label{tab:auroc_margin}
+\centering
+\begin{tabular}{lccccc}
+\toprule
+& & \multicolumn{2}{c}{MSP} & \multicolumn{2}{c}{Max Logit} \\ 
+LLM & Q\&A Accuracy & AUROC & $p < 10^{-4}$ & AUROC & $p < 10^{-4}$ \\ 
+\cmidrule(lr){1-1} \cmidrule(lr){2-2} \cmidrule(lr){3-4} \cmidrule(lr){5-6} 
+Falcon 7B & 22.7 & 48.6 & 2/2 & 46.3 & 2/2\\
+Falcon 40B & 31.9 & 56.9 & 2/2 & 55.2 & 2/2\\
+Llama 2 7B & 25.4 & 53.2 & 2/2 & 53.0 & 2/2\\
+Llama 2 70B & 46.3 & 72.2 & 2/2 & 72.2 & 2/2\\
+Llama 3.0 8B & 42.5 & 69.0 & 2/2 & 69.0 & 2/2\\
+Llama 3.0 70B & 72.4 & 78.6 & 2/2 & 78.7 & 2/2\\
+Llama 3.1 8B & 53.9 & 74.2 & 2/2 & 74.1 & 2/2\\
+Llama 3.1 70B & 73.9 & 84.4 & 2/2 & 84.5 & 2/2\\
+Mistral 7B & 55.2 & 71.2 & 2/2 & 71.3 & 2/2\\
+Mixtral 8x7B & 68.7 & 73.9 & 2/2 & 74.0 & 2/2\\
+SOLAR 10.7B & 52.4 & 72.0 & 2/2 & 72.0 & 2/2\\
+Yi 6B & 40.0 & 65.0 & 2/2 & 64.4 & 2/2\\
+Yi 34B & 61.0 & 77.2 & 2/2 & 77.0 & 2/2\\
+GPT-3.5 Turbo & 55.9 & 75.3 & 2/2 &  & 2/2\\
+GPT-4o & 84.0 & 83.0 & 2/2 &  & 2/2\\
+\bottomrule
+\end{tabular}
+\end{table*}
