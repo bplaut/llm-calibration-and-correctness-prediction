@@ -1,3 +1,5 @@
+This repository contains the code for our paper "Probabilities of Chat LLMs Are Miscalibrated but Still Predict Correctness on Multiple-Choice Q&A", published in Transactions on Machine Learning Research in 2025.
+
 Before attempting to run this code, make sure you have text generation with Hugging Face set up: https://huggingface.co/docs/transformers/llm_tutorial
 
 # Generating text and running Q&A tests
@@ -7,9 +9,8 @@ There are two main Python files:
 Both files support the same command line arguments (shown below), although some arguments are only relevant for one file. For example, --dataset is only used for take_qa_test.py.
 
 ```
-usage: generate_text.py/take_qa_tests.py [-h] -m MODEL [-p PROMPTS] [-n MAX_NEW_TOKENS] [-k NUM_TOP_TOKENS] [-c] [-s]
-                       [-r NUM_RESPONSES] [-d DATASET] [-q QUESTION_RANGE] [-b BATCH_SIZE] [-a ABSTAIN_OPTION]
-                       [-g PROMPT_PHRASING] [-f FEW_SHOT_NUMBER]
+usage: take_qa_test.py/generate_text.py [-h] -m MODEL [-p PROMPTS] [-n MAX_NEW_TOKENS] [-k NUM_TOP_TOKENS] [-c] [-d DATASET]
+                        [-q QUESTION_RANGE] [-b BATCH_SIZE] [-g PROMPT_PHRASING] [-f FEW_SHOT_NUMBER]
 
 Perform text generation and Q&A tasks via Hugging Face models.
 
@@ -18,8 +19,7 @@ options:
   -m MODEL, --model MODEL
                         Which LLM to use. Check this file for currently supported options and/or add your own.
   -p PROMPTS, --prompts PROMPTS
-                        List of prompts, separated by |. For example "This is a prompt|What a time to be
-                        alive".
+                        List of prompts, separated by |. For example "This is a prompt|What a time to be alive".
   -n MAX_NEW_TOKENS, --max_new_tokens MAX_NEW_TOKENS
                         Number of new tokens to generate on top of the prompt
   -k NUM_TOP_TOKENS, --num_top_tokens NUM_TOP_TOKENS
@@ -27,10 +27,6 @@ options:
                         probabilities
   -c, --completion_mode
                         Use traditional auto-complete mode, rather than user-assistant chat
-  -s, --do_sample       Should we sample from the probability distribution, or greedily pick the most likely token?
-  -r NUM_RESPONSES, --num_responses NUM_RESPONSES
-                        Number of responses to generate per prompt. This argument is ignored for greedy decoding,
-                        since that only generates one answer.
   -d DATASET, --dataset DATASET
                         The name of the Hugging Face dataset (needed for experiments and such)
   -q QUESTION_RANGE, --question_range QUESTION_RANGE
@@ -38,8 +34,6 @@ options:
                         endq", 0 indexed. For example, "-q 0-100".
   -b BATCH_SIZE, --batch_size BATCH_SIZE
                         Maximum number of prompts to batch together. Only used for experiments
-  -a ABSTAIN_OPTION, --abstain_option ABSTAIN_OPTION
-                        When running a Q&A test, should we add an option that says "I don't know"?
   -g PROMPT_PHRASING, --prompt_phrasing PROMPT_PHRASING
                         When running a Q&A test, which of the two prompt phrasings should we use? 0 or 1
   -f FEW_SHOT_NUMBER, --few_shot_number FEW_SHOT_NUMBER
